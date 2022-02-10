@@ -5,7 +5,7 @@ class User(models.Model):
     statuses = (
         ( 'locked' , 'locked'),
         ( 'unlocked' , 'unlocked')
-    )
+      )
     roles = (
         ( 'user' , 'user'),
         ( 'admin' , 'admin')
