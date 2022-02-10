@@ -25,7 +25,9 @@ class Category(models.Model):
         return self.cat_name
 
 class Subscriptions(models.Model):
+    user_id = models.ForeignKey(User)
     cat_id = models.ForeignKey(Category)
+    
 
 
 
