@@ -31,8 +31,8 @@ class Category(models.Model):
 
 
 class Subscriptions(models.Model):
-    user_id = models.ForeignKey(User)
-    cat_id = models.ForeignKey(Category)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    cat_id = models.ForeignKey(Category, on_delete=models.CASCADE)
 
 
 class Post(models.Model):
@@ -51,7 +51,7 @@ class Tags(models.Model):
     tag_name = models.CharField(max_length=30)
    # post id pending upon making posts table
    # post id updated
-    post_id = models.ForeignKey(Post)
+    post_id = models.ForeignKey(Post, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.tag_name
