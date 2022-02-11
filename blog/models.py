@@ -2,27 +2,6 @@ from django.db import models
 
 # Create your models here.
 
-#comment 
-
-class Comment(models.Models):
-    cmnt_cr_date = models.DateTimeField(auto_now_add=True)
-    cmnt_content = models.CharField(max_length=200, null=True)
-   
-   # def __str__(self):
-      #return self.comment  
-
-#reactions
-class Reaction(models.Models):
-
-    roles = (
-        ('like' , 'like'),
-        ('dislike' , 'dislike')
-     )
-    reaction = models.charField(choices=roles)
-    
-    #def __str__(self):
-      #return self.reaction
-
 class User(models.Model):
     statuses = (
         ('locked', 'locked'),
@@ -84,9 +63,7 @@ class Comment(models.Models):
     post_id = models.ForeignKey(Post, on_delete=models.CASCADE)#fk-post
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)#fk-user
    
-   # def __str__(self):
-      #return self.comment  
-
+   
 #create reactions.s
 class Reaction(models.Models):
 
@@ -98,5 +75,4 @@ class Reaction(models.Models):
     post_id = models.ForeignKey(Post, on_delete=models.CASCADE)#fk-post
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)#fk-user
     
-    #def __str__(self):
-      #return self.reaction
+    
