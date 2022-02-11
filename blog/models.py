@@ -42,14 +42,14 @@ class User(models.Model):
     def __str__(self):
         return self.user_name
 
-
+#creating category table
 class Category(models.Model):
     cat_name = models.CharField(max_length=30)
 
     def __str__(self):
         return self.cat_name
 
-
+#creating subscription table
 class Subscriptions(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     cat_id = models.ForeignKey(Category, on_delete=models.CASCADE)
