@@ -54,7 +54,7 @@ class Subscriptions(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     cat_id = models.ForeignKey(Category, on_delete=models.CASCADE)
 
-#create post table
+#create post table?
 class Post(models.Model):
     post_title = models.CharField(max_length=30)
     post_picture = models.ImageField()
