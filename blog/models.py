@@ -54,7 +54,7 @@ class Subscriptions(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     cat_id = models.ForeignKey(Category, on_delete=models.CASCADE)
 
-
+#create post table
 class Post(models.Model):
     post_title = models.CharField(max_length=30)
     post_picture = models.ImageField()
@@ -62,7 +62,7 @@ class Post(models.Model):
     post_cr_date = models.DateTimeField(auto_now_add=True)
     cat_id = models.ForeignKey(Category, on_delete=models.CASCADE)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-
+    
     def __str__(self):
         return self.post_title
 
