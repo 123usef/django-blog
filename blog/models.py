@@ -57,7 +57,7 @@ class Tags(models.Model):
 
 #create comment.s 
 
-class Comment(models.Models):
+class Comment(models.Model):
     cmnt_cr_date = models.DateTimeField(auto_now_add=True)
     cmnt_content = models.CharField(max_length=200, null=True)
     post_id = models.ForeignKey(Post, on_delete=models.CASCADE)#fk-post
@@ -65,13 +65,13 @@ class Comment(models.Models):
    
    
 #create reactions.s
-class Reaction(models.Models):
+class Reaction(models.Model):
 
     roles = (
         ('like' , 'like'),
         ('dislike' , 'dislike')
      )
-    reaction = models.charField(choices=roles)
+    reaction = models.CharField(choices=roles)
     post_id = models.ForeignKey(Post, on_delete=models.CASCADE)#fk-post
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)#fk-user
     
