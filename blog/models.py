@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 
+
 class User(models.Model):
     statuses = (
         ('locked', 'locked'),
@@ -21,19 +22,25 @@ class User(models.Model):
     def __str__(self):
         return self.user_name
 
-#creating category table
+# creating category table
+
+
 class Category(models.Model):
     cat_name = models.CharField(max_length=30)
 
     def __str__(self):
         return self.cat_name
 
-#creating subscription table
+# creating subscription table
+
+
 class Subscriptions(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     cat_id = models.ForeignKey(Category, on_delete=models.CASCADE)
 
-#create post table
+# create post table
+
+
 class Post(models.Model):
     post_title = models.CharField(max_length=30)
     post_picture = models.ImageField()
@@ -41,7 +48,7 @@ class Post(models.Model):
     post_cr_date = models.DateTimeField(auto_now_add=True)
     cat_id = models.ForeignKey(Category, on_delete=models.CASCADE)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    
+
     def __str__(self):
         return self.post_title
 
@@ -55,24 +62,23 @@ class Tags(models.Model):
     def __str__(self):
         return self.tag_name
 
-#create comment.s 
+# create comment.s
+
 
 class Comment(models.Model):
     cmnt_cr_date = models.DateTimeField(auto_now_add=True)
     cmnt_content = models.CharField(max_length=200, null=True)
-    post_id = models.ForeignKey(Post, on_delete=models.CASCADE)#fk-post
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)#fk-user
-   
-   
-#create reactions.s
+    post_id = models.ForeignKey(Post, on_delete=models.CASCADE)  # fk-post
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)  # fk-user
+
+
+# create reactions.s
 class Reaction(models.Model):
 
     roles = (
-        ('like' , 'like'),
-        ('dislike' , 'dislike')
-     )
-    reaction = models.CharField(choices=roles)
-    post_id = models.ForeignKey(Post, on_delete=models.CASCADE)#fk-post
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)#fk-user
-    
-    
+        ('like', 'like'),
+        ('dislike', 'dislike')
+    )
+    reaction = models.CharField(max_length=8, choices=roles)
+    post_id = models.ForeignKey(Post, on_delete=models.CASCADE)  # fk-post
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)  # fk-user
