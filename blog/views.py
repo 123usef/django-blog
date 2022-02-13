@@ -14,6 +14,8 @@ def home(request):
     return render(request, 'blogApp/home.html')
 def navbar(request):
     return render(request, 'blogApp/navbar.html')
+def homepage(request):
+    return render(request, 'blogApp/homepage.html')
 
 
 def register(request):
