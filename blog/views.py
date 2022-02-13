@@ -50,4 +50,4 @@ def userlogin(request):
 
 def userlogout(request):
 	logout(request)
-	return redirect('login')
+	return redirect('nav')

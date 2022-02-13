@@ -17,13 +17,18 @@
             <li class="nav-item col-1 offset-1">
               <a class="nav-link main_color " aria-current="page" href="#">Homepage</a>
             </li>
+            {% if user.is_authenticated %}
+            <li class="nav-item col-1">
+              <a class="nav-link main_color " href="{% url 'logout' %}">Logout</a>
+            </li>
+            {% else %}  
             <li class="nav-item col-1">
               <a class="nav-link main_color " href="{% url 'login' %}">Login</a>
             </li>
             <li class="nav-item col-1">
-              <a class="nav-link main_color" href="{% url 'signup' %}">Sign up</a>
+              <a class="nav-link main_color" href="{% url 'register' %}">Sign up</a>
             </li>
-          
+            {% endif %}
           <form class="d-flex col-4">
             <input class="form-control bg-dark bg-gradient p-2 text-white bg-opacity-75 me-2 " type="search" placeholder="Search" aria-label="Search">
           </form>
