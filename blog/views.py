@@ -11,7 +11,9 @@ from .models import User
 
 
 def home(request):
-    return render(request, 'blogApp/home.html', {})
+    return render(request, 'blogApp/home.html')
+def navbar(request):
+    return render(request, 'blogApp/navbar.html')
 
 
 def register(request):
@@ -26,7 +28,7 @@ def register(request):
                 return redirect(home)
 
         context = {'form': form}
-        return render(request, "blogApp/register.html", context)
+        return render(request, "blogApp/signup.html", context)
 
       
 def userlogin(request):
