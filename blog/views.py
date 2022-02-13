@@ -28,5 +28,24 @@ def register(request):
         context = {'form': form}
         return render(request, "blogApp/register.html", context)
 
-    
+      
+def userlogin(request):
+    if request.user.is_authenticated:
+        return redirect('home')
+    else:
+        if request.method == 'POST':
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+            user = authenticate(request,username=username,password=password) 
+            if user is not None:
+                login(request,user)
+                return redirect('home')
+            else :
+                return redirect('register')          
+        context={}
+        return render(request,'blogApp/login.html',context)
 
+
+def userlogout(request):
+	logout(request)
+	return redirect('login')
