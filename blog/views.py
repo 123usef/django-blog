@@ -11,7 +11,7 @@ from .models import User
 
 
 def home(request):
-    return render(request, 'home.html', {})
+    return render(request, 'blogApp/home.html', {})
 
 
 def register(request):
@@ -23,10 +23,10 @@ def register(request):
             form = CreateForm(request.POST)
             if form.is_valid():
                 form.save()
-                return redirect('home.html')
+                return redirect(home)
 
         context = {'form': form}
-        return render(request, "register.html", context)
+        return render(request, "blogApp/register.html", context)
 
     
 
