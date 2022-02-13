@@ -11,7 +11,11 @@ from .models import User
 
 
 def home(request):
-    return render(request, 'blogApp/home.html', {})
+    return render(request, 'blogApp/home.html')
+def navbar(request):
+    return render(request, 'blogApp/navbar.html')
+def homepage(request):
+    return render(request, 'blogApp/homepage.html')
 
 
 def register(request):
@@ -26,7 +30,7 @@ def register(request):
                 return redirect(home)
 
         context = {'form': form}
-        return render(request, "blogApp/register.html", context)
+        return render(request, "blogApp/signup.html", context)
 
       
 def userlogin(request):
@@ -48,4 +52,4 @@ def userlogin(request):
 
 def userlogout(request):
 	logout(request)
-	return redirect('login')
+	return redirect('nav')
