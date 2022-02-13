@@ -15,18 +15,18 @@
           <a class="navbar-brand col-1 offset-1 blog">BLOG</a>
           
             <li class="nav-item col-1 offset-1">
-              <a class="nav-link main_color " aria-current="page" href="#">Homepage</a>
+              <a class="nav-link main_color " aria-current="page" href="{% url 'homepage' %}">Homepage</a>
             </li>
             {% if user.is_authenticated %}
             <li class="nav-item col-1">
-              <a class="nav-link main_color " href="{% url 'logout' %}">Logout</a>
+              <a class="nav-link main_color link-light" href="{% url 'logout' %}">Logout</a>
             </li>
             {% else %}  
             <li class="nav-item col-1">
-              <a class="nav-link main_color " href="{% url 'login' %}">Login</a>
+              <a class="nav-link main_color link-light" href="{% url 'login' %}">Login</a>
             </li>
             <li class="nav-item col-1">
-              <a class="nav-link main_color" href="{% url 'register' %}">Sign up</a>
+              <a class="nav-link main_color link-light" href="{% url 'register' %}">Sign up</a>
             </li>
             {% endif %}
           <form class="d-flex col-4">

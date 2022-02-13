@@ -1,13 +1,20 @@
+body{
+    font-family:'Times New Roman', Times, serif !important;
+}
 .main_color{
     color: #ffffff;
     font-size: 23px;
     font-weight: bold;
     cursor: pointer;
-    font-family:'Times New Roman', Times, serif;
     text-decoration: none;
 }
 .main_color:hover{
     color:#e82165
+}
+.btn_style{
+    color: #ffffff;
+    background-color: #e82165;
+    cursor: pointer;
 }
 .coloredit{
     background-color:#e9447e;
@@ -19,7 +26,6 @@
 .blog{
     font-size: 28px;
     font-weight: bold;
-    font-family:'Times New Roman', Times, serif;
 }
 .search{
     border:1px solid #ffffff;
@@ -83,3 +89,11 @@
     margin-top: 10px;
 }
 /* end login  */
+.font_text{
+    cursor: pointer;
+}
+.font_text:hover{
+    color: #e82165;
+}
+  
+
