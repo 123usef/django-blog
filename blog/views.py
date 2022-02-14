@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 
 # from .forms import CreateForm
 
-from .models import User
+from .models import Post, User
 # Create your views here.
 
 
@@ -53,3 +53,4 @@ def userlogin(request):
 def userlogout(request):
 	logout(request)
 	return redirect('nav')
+
