@@ -10,10 +10,8 @@ from .models import User
 # Create your views here.
 
 
-def home(request):
-    return render(request, 'blogApp/home.html')
-def navbar(request):
-    return render(request, 'blogApp/navbar.html')
+# def navbar(request):
+#     return render(request, 'blogApp/navbar.html')
 def homepage(request):
     return render(request, 'blogApp/homepage.html')
 
