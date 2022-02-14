@@ -4,7 +4,9 @@ from django.contrib.auth.models import AbstractUser
 # Create your models here.
 
 
+
 class User(AbstractUser):
+
     statuses = (
         ('locked', 'locked'),
         ('unlocked', 'unlocked')
@@ -61,6 +63,7 @@ class Tags(models.Model):
     def __str__(self):
         return self.tag_name
 
+
 # create comment.s
 
 
@@ -81,3 +84,4 @@ class Reaction(models.Model):
     reaction = models.CharField(max_length=8, choices=roles)
     post_id = models.ForeignKey(Post, on_delete=models.CASCADE)  # fk-post
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)  # fk-user
+
