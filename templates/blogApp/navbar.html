@@ -42,15 +42,23 @@
                 <h5 class="offcanvas-title align-items-center h2"  id="offcanvasExampleLabel">Categories</h5>
                 <button type="button" class="btn-close text-reset" style="background-color: #ffffff;" data-bs-dismiss="offcanvas" aria-label="Close"></button>
               </div>
+
               <div class="offcanvas-body">
-                  <a href="#" class="nav-link align-middle px-0 link-light ">
+                  {% for x in cats %}
+                  <a href="{% url 'det_category' x.id %}" class="nav-link align-middle px-0 link-light ">
                       <i class="fs-4 bi-house "></i> 
-                      <span class="ms-1 d-none d-sm-inline font_text h3">Category1<i class="fa-solid fa-plus" style="margin-left: 50%;"></i></span>
+                      <span class="ms-1 d-none d-sm-inline font_text h3">{{ x.cat_name }}
+                        {% if user.is_authenticated %}
+                          {% if x in subs_id %}
+                              <a href="{% url 'unsubscribe' x.id %}"><i class="fa-solid fa-minus" style="margin-left: 50%;"></i></a>
+                          {%else%}
+                              <a href="{% url 'subscribe' x.id %}"><i class="fa-solid fa-plus" style="margin-left: 50%;"></i></a>
+                          {% endif %}
+                        {% endif %}
+                      </span>
                   </a>
-                    <a href="#" class="nav-link align-middle px-0 link-light ">
-                        <i class="fs-4 bi-house "></i> 
-                        <span class="ms-1 d-none d-sm-inline font_text h3">Category1<i class="fa-solid fa-plus" style="margin-left: 50%;"></i></span>
-                    </a>
+                  {% endfor %}
+
               </div>
             </div>  
         </div>
