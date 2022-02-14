@@ -34,13 +34,15 @@ class Category(models.Model):
 class Subscriptions(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     cat_id = models.ForeignKey(Category, on_delete=models.CASCADE)
+    def __str__(self):
+        return self.cat_id
 
 # create post table
 
 
 class Post(models.Model):
     post_title = models.CharField(max_length=30)
-    post_picture = models.ImageField()
+    post_picture = models.ImageField(blank=True)
     post_content = models.CharField(max_length=500)
     post_cr_date = models.DateTimeField(auto_now_add=True)
     cat_id = models.ForeignKey(Category, on_delete=models.CASCADE)
