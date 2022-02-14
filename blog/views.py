@@ -3,19 +3,25 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.forms import UserCreationForm
 from .forms import CreateForm
 from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages 
 
 # from .forms import CreateForm
 
 from .models import User
 # Create your views here.
 
-
+def base(request):
+    return render(request, 'blogApp/home.html')
 def home(request):
     return render(request, 'blogApp/home.html')
-def navbar(request):
-    return render(request, 'blogApp/navbar.html')
 def homepage(request):
     return render(request, 'blogApp/homepage.html')
+def post(request):
+    return render(request, 'blogApp/post.html')
+def profile(request):
+    return render(request, 'blogApp/profile.html')
+def useradmin(request):
+    return render(request, 'blogApp/admin.html')
 
 
 def register(request):
@@ -45,11 +51,12 @@ def userlogin(request):
                 login(request,user)
                 return redirect('home')
             else :
-                return redirect('register')          
+                messages.error(request, 'Username or passwoed is incorrecrt') 
+                return redirect('login')          
         context={}
         return render(request,'blogApp/login.html',context)
 
 
 def userlogout(request):
 	logout(request)
-	return redirect('nav')
+	return redirect('home')
