@@ -21,7 +21,7 @@
   <div class="container" style="margin-top: 3%;">
     <div class="row">
       {% for x in posts %}
-      <div class="card text-white  col-3" style="width: 18rem;background-color: #0e0d0d;">
+      <div class="card text-white  col-3" style="width: 18rem;background-color: #0e0d0d; border-color:#ffffff; margin-left:1%">
         <a href="{% url 'post' %}"><img src="{% static 'img/home.jpg' %}" class="card-img-top" style="height:30vh" alt="..."></a>
         <div class="card-body">
           <h3>{{ x.post_title }}</h3>
