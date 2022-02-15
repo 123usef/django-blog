@@ -1,20 +1,15 @@
 from pyexpat import model
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-# Create your models here.
 
+
+# Create your models here.
 
 
 class User(AbstractUser):
 
-    statuses = (
-        ('locked', 'locked'),
-        ('unlocked', 'unlocked')
-    )
-    roles = (
-        ('user', 'user'),
-        ('admin', 'admin')
-    )
+    statuses = (("locked", "locked"), ("unlocked", "unlocked"))
+    roles = (("user", "user"), ("admin", "admin"))
     user_status = models.CharField(max_length=20, choices=statuses)
     user_role = models.CharField(max_length=20, choices=roles)
 
@@ -30,14 +25,17 @@ class Category(models.Model):
     def __str__(self):
         return self.cat_name
 
+
 # creating subscription table
 
 
 class Subscriptions(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     cat_id = models.ForeignKey(Category, on_delete=models.CASCADE)
+
     def __str__(self):
         return self.cat_id
+
 
 # create post table
 
@@ -56,8 +54,8 @@ class Post(models.Model):
 
 class Tags(models.Model):
     tag_name = models.CharField(max_length=30)
-   # post id pending upon making posts table
-   # post id updated
+    # post id pending upon making posts table
+    # post id updated
     post_id = models.ForeignKey(Post, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -77,11 +75,7 @@ class Comment(models.Model):
 # create reactions.s
 class Reaction(models.Model):
 
-    roles = (
-        ('like', 'like'),
-        ('dislike', 'dislike')
-    )
+    roles = (("like", "like"), ("dislike", "dislike"))
     reaction = models.CharField(max_length=8, choices=roles)
     post_id = models.ForeignKey(Post, on_delete=models.CASCADE)  # fk-post
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)  # fk-user
-
