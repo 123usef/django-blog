@@ -15,7 +15,9 @@ urlpatterns = [
   path('det_category/<int:id>',views.det_category, name='det_category'),
   path('subscribe/<int:id>',views.subscribe, name='subscribe'),
   path('user_subscriptions',views.user_subscriptions, name='user_subscriptions'),
-  path('unsubscribe/<int:id>',views.unsubscribe, name='unsubscribe')
-  
+  path('unsubscribe/<int:id>',views.unsubscribe, name='unsubscribe'),
+  # Posts
+   path('post/<int:id>',views.det_post, name='post'),
+   path('react/<int:id>/<str:react>' , views.add_reaction , name='add_reaction')
 ]
 
