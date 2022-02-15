@@ -31,7 +31,7 @@ def register(request):
                 form.save()
                 return redirect(home)
 
-        context = {"form": form}
+        context = {"form": form  }
         return render(request, "blogApp/register.html", context)
 
 
@@ -39,7 +39,7 @@ def userlogin(request):
     if request.user.is_authenticated:
         return redirect("homepage")
     else:
-        if request.method == "POST":
+        if request.method == "POST": 
             username = request.POST.get("username")
             password = request.POST.get("password")
             user = authenticate(request, username=username, password=password)
@@ -64,8 +64,9 @@ def homepage(request):
     posts = Post.objects.all()
 
     if request.user.is_authenticated:
+        
         return redirect("user_subscriptions")
-
+    
     context = {"cats": cats, "posts": posts}
     return render(request, "blogApp/homepage.html", context)
 
