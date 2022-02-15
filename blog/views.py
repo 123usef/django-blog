@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import CreateForm
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import ListView
-from .models import Post, Subscriptions, User, Category
+from .models import Comment, Post, Reaction, Subscriptions, User, Category
 from django.contrib import messages 
 
 # Create your views here.
@@ -120,3 +120,20 @@ def unsubscribe(request, id):
     subscribe = Subscriptions.objects.get(user_id=request.user, cat_id=category)
     subscribe.delete()
     return redirect(user_subscriptions)
+
+# post 
+def det_post(request,id):
+    post = Post.objects.get(id=id)
+    reacts = post.reaction_set.all()
+    likes =len( reacts.filter(reaction='like') )
+    dislikes =len(reacts.filter(reaction='dislike'))
+    comment = Comment.objects.filter(post_id = id).order_by("-cmnt_cr_date")
+    reaction = Reaction.objects.filter(post_id = id)
+    context = {'post':post , 'comment': comment , 'reaction':reaction , 'likes':likes , 'dislikes':dislikes}
+    return render(request,'blogApp/postdetails.html' , context)
+
+def add_reaction(request , id ,react ):
+    user = request.user
+    post = Post.objects.get(id=id)
+    reaction = Reaction.objects.create(post_id = post , user_id = user , reaction=react)
+    return redirect('post' , id = id)
