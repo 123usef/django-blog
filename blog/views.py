@@ -100,8 +100,10 @@ def user_subscriptions(request):
     subs_id = []
     for sub in subs:
         subs_id.append(sub.cat_id)
-    
-    posts = Post.objects.filter(cat_id__in=subs_id)
+    if len (subs) == 0 :
+            posts = Post.objects.all()
+    else :
+            posts = Post.objects.filter(cat_id__in=subs_id)
     context = {"posts": posts, "cats": cats, "subs_id": subs_id}
     return render(request, "blogApp/homepage.html", context)
 

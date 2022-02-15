@@ -50,9 +50,9 @@
                       <span class="ms-1 d-none d-sm-inline font_text h3">{{ x.cat_name }}
                         {% if user.is_authenticated %}
                           {% if x in subs_id %}
-                              <a href="{% url 'unsubscribe' x.id %}"><i class="fa-solid fa-minus" style="margin-left: 50%;"></i></a>
+                              <a href="{% url 'unsubscribe' x.id %}"><i class="fa-solid fa-minus btn btn-primary" style="margin-left: 50%;"></i></a>
                           {%else%}
-                              <a href="{% url 'subscribe' x.id %}"><i class="fa-solid fa-plus" style="margin-left: 50%;"></i></a>
+                              <a href="{% url 'subscribe' x.id %}"><i class="fa-solid fa-plus btn btn-primary" style="margin-left: 50%;"></i></a>
                           {% endif %}
                         {% endif %}
                       </span>
