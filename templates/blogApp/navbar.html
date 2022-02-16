@@ -90,9 +90,9 @@
                   {% if user.is_authenticated %}
                       {% if x in subs_id %}
                         <button href="{% url 'unsubscribe' x.id %}" class="btn btn_style col-5" style="height:4vh;margin-top:3%">unsubscribe</button>
-                    {%else%}
+                      {%else%}
                         <button href="{% url 'subscribe' x.id %}" class="btn btn_style col-5 "style="height:4vh; margin-top:3%" >subscribe</button>
-                    {% endif %}
+                      {% endif %}
                   {% endif %}
                   <hr style="width: 80%; margin-left:8%"> 
                 {% endfor %}
