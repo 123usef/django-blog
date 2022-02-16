@@ -120,3 +120,4 @@ def unsubscribe(request, id):
     subscribe = Subscriptions.objects.get(user_id=request.user, cat_id=category)
     subscribe.delete()
     return redirect(user_subscriptions)
+

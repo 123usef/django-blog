@@ -66,7 +66,6 @@ class Tags(models.Model):
 
 # create comment.s
 
-
 class Comment(models.Model):
     cmnt_cr_date = models.DateTimeField(auto_now_add=True)
     cmnt_content = models.CharField(max_length=200, null=True)
