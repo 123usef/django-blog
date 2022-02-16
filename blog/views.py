@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.views.generic import ListView
 from .models import Comment, Post, Reaction, Subscriptions, User, Category
 from django.contrib import messages 
+from django.http import HttpResponseRedirect
 
 # Create your views here.
 
@@ -83,7 +84,7 @@ def det_category(request, id):
     user = request.user
     if request.user.is_authenticated:
         subs = user.subscriptions_set.all()
-
+    
     posts = category.post_set.all().order_by("-post_cr_date")
     context = {"posts": posts, "cats": cats}
 
@@ -112,14 +113,15 @@ def subscribe(request, id):
     user_id = request.user.id
     category = Category.objects.get(id=id)
     subscribe = Subscriptions.objects.create(user_id=request.user, cat_id=category)
-    return redirect(user_subscriptions)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
 
 def unsubscribe(request, id):
     user_id = request.user.id
     category = Category.objects.get(id=id)
     subscribe = Subscriptions.objects.get(user_id=request.user, cat_id=category)
     subscribe.delete()
-    return redirect(user_subscriptions)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 # post 
 def det_post(request,id):
