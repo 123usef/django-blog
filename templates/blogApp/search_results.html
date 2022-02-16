@@ -1,0 +1,28 @@
+{% extends 'blogApp/base.html' %} 
+{% load static %}
+ 
+{% block title_block %} 
+ 
+{%endblock %} 
+
+ {% block main_block %} 
+ {% if post %}
+ {% for ps in post %}
+ <div class="container">
+<div class="card bg-primary" style="width: 18rem">
+  <img src="{% static 'img/home.jpg' %}" class="card-img-top" alt="..." />
+  <div class="card-body">
+    <h5 class="card-title">{{ps.post_title}}</h5>
+    <p class="card-text " >{{ps.post_content}}</p>
+    <a href='{% url "post" ps.id %}' class="btn btn-warning">view post</a>
+  </div>
+</div>
+{% endfor %} 
+{% else%}
+<div class="alert alert-danger" role="alert">
+    there is no post with this title 
+  </div>
+</div>
+
+{% endif %}
+{% endblock %}

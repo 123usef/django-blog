@@ -4,21 +4,30 @@ from .forms import CreateForm
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import ListView
 from .models import Comment, Post, Reaction, Subscriptions, User, Category
-from django.contrib import messages 
-
+from django.contrib import messages
+import requests
 # Create your views here.
 
+
 def base(request):
-    return render(request, 'blogApp/home.html')
+    return render(request, "blogApp/home.html")
+
+
 def home(request):
-    return render(request, 'blogApp/home.html')
+    return render(request, "blogApp/home.html")
+
 
 def post(request):
-    return render(request, 'blogApp/post.html')
+    return render(request, "blogApp/post.html")
+
+
 def profile(request):
-    return render(request, 'blogApp/profile.html')
+    return render(request, "blogApp/profile.html")
+
+
 def useradmin(request):
-    return render(request, 'blogApp/admin.html')
+    return render(request, "blogApp/admin.html")
+
 
 def register(request):
     if request.user.is_authenticated:
@@ -31,7 +40,7 @@ def register(request):
                 form.save()
                 return redirect(home)
 
-        context = {"form": form  }
+        context = {"form": form}
         return render(request, "blogApp/register.html", context)
 
 
@@ -39,18 +48,19 @@ def userlogin(request):
     if request.user.is_authenticated:
         return redirect("homepage")
     else:
-        if request.method == "POST": 
+        if request.method == "POST":
             username = request.POST.get("username")
             password = request.POST.get("password")
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('homepage')
-            else :
-                messages.error(request, 'Username or passwoed is incorrecrt') 
-                return redirect('login')          
-        context={}
-        return render(request,'blogApp/login.html',context)
+                return redirect("homepage")
+            else:
+                messages.error(request, "Username or passwoed is incorrecrt")
+                return redirect("login")
+        context = {}
+        return render(request, "blogApp/login.html", context)
+
 
 def userlogout(request):
     logout(request)
@@ -58,16 +68,22 @@ def userlogout(request):
 
 
 # homepage view start
+response = requests.get('https://newsapi.org/v2/everything?'
+       'q=Apple&'
+       'from=2022-02-16&'
+       'sortBy=popularity&'
+       'apiKey=b6ddcbd6ea8a4a418617efe10b23cb0c')
+api_post = response.json()
+ln = api_post["articles"]
 
 def homepage(request):
     cats = Category.objects.all()
     posts = Post.objects.all()
-
+   
     if request.user.is_authenticated:
-        
         return redirect("user_subscriptions")
-    
-    context = {"cats": cats, "posts": posts}
+
+    context = {"cats": cats, "posts": posts ,  "ln":ln }
     return render(request, "blogApp/homepage.html", context)
 
 
@@ -101,11 +117,11 @@ def user_subscriptions(request):
     subs_id = []
     for sub in subs:
         subs_id.append(sub.cat_id)
-    if len (subs) == 0 :
-            posts = Post.objects.all()
-    else :
-            posts = Post.objects.filter(cat_id__in=subs_id)
-    context = {"posts": posts, "cats": cats, "subs_id": subs_id}
+    if len(subs) == 0:
+        posts = Post.objects.all()
+    else:
+        posts = Post.objects.filter(cat_id__in=subs_id)
+    context = {"posts": posts, "cats": cats, "subs_id": subs_id,"ln":ln}
     return render(request, "blogApp/homepage.html", context)
 
 
@@ -115,6 +131,7 @@ def subscribe(request, id):
     subscribe = Subscriptions.objects.create(user_id=request.user, cat_id=category)
     return redirect(user_subscriptions)
 
+
 def unsubscribe(request, id):
     user_id = request.user.id
     category = Category.objects.get(id=id)
@@ -122,19 +139,36 @@ def unsubscribe(request, id):
     subscribe.delete()
     return redirect(user_subscriptions)
 
-# post 
-def det_post(request,id):
+
+# post
+def det_post(request, id):
     post = Post.objects.get(id=id)
     reacts = post.reaction_set.all()
-    likes =len( reacts.filter(reaction='like') )
-    dislikes =len(reacts.filter(reaction='dislike'))
-    comment = Comment.objects.filter(post_id = id).order_by("-cmnt_cr_date")
-    reaction = Reaction.objects.filter(post_id = id)
-    context = {'post':post , 'comment': comment , 'reaction':reaction , 'likes':likes , 'dislikes':dislikes}
-    return render(request,'blogApp/postdetails.html' , context)
+    likes = len(reacts.filter(reaction="like"))
+    dislikes = len(reacts.filter(reaction="dislike"))
+    comment = Comment.objects.filter(post_id=id).order_by("-cmnt_cr_date")
+    reaction = Reaction.objects.filter(post_id=id)
+    context = {
+        "post": post,
+        "comment": comment,
+        "reaction": reaction,
+        "likes": likes,
+        "dislikes": dislikes,
+    }
+    return render(request, "blogApp/postdetails.html", context)
 
-def add_reaction(request , id ,react ):
+
+def add_reaction(request, id, react):
     user = request.user
     post = Post.objects.get(id=id)
-    reaction = Reaction.objects.create(post_id = post , user_id = user , reaction=react)
-    return redirect('post' , id = id)
+    reaction = Reaction.objects.create(post_id=post, user_id=user, reaction=react)
+    return redirect("post", id=id)
+
+
+# search method
+def search(request):
+    if request.method == "GET":
+        user_value = request.GET.get("search_value")
+        result = Post.objects.all().filter(post_title=user_value)
+        context = {"post": result}
+        return render(request, "blogApp/search_results.html", context)
