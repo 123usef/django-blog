@@ -139,6 +139,7 @@ def unsubscribe(request, id):
     category = Category.objects.get(id=id)
     subscribe = Subscriptions.objects.get(user_id=request.user, cat_id=category)
     subscribe.delete()
+    print(5)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 
@@ -171,6 +172,6 @@ def add_reaction(request, id, react):
 def search(request):
     if request.method == "GET":
         user_value = request.GET.get("search_value")
-        result = Post.objects.all().filter(post_title=user_value)
+        result = Post.objects.all().filter(post_title__contains=user_value)
         context = {"post": result}
         return render(request, "blogApp/search_results.html", context)
