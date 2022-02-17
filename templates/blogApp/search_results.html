@@ -9,12 +9,12 @@
  {% if post %}
  {% for ps in post %}
  <div class="container">
-<div class="card bg-primary" style="width: 18rem">
+<div class="card" style="width: 18rem; background-color:#242424; margin-top: 3%;">
   <img src="{% static 'img/home.jpg' %}" class="card-img-top" alt="..." />
   <div class="card-body">
     <h5 class="card-title">{{ps.post_title}}</h5>
     <p class="card-text " >{{ps.post_content}}</p>
-    <a href='{% url "post" ps.id %}' class="btn btn-warning">view post</a>
+    <a href='{% url "post" ps.id %}' class="btn btn_style">view post</a>
   </div>
 </div>
 {% endfor %} 

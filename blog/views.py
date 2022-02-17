@@ -29,8 +29,9 @@ def profile(request):
 
 
 def useradmin(request):
-    return render(request, "blogApp/admin.html")
+    return render(request, 'blogApp/admin.html')
 
+#register
 
 def register(request):
     if request.user.is_authenticated:
@@ -46,7 +47,7 @@ def register(request):
         context = {"form": form}
         return render(request, "blogApp/register.html", context)
 
-
+#login
 def userlogin(request):
     if request.user.is_authenticated:
         return redirect("homepage")
@@ -64,7 +65,7 @@ def userlogin(request):
         context = {}
         return render(request, "blogApp/login.html", context)
 
-
+#logout
 def userlogout(request):
     logout(request)
     return redirect("home")
@@ -100,9 +101,7 @@ def search(request):
         context = {"post": result}
         return render(request, "blogApp/search_results.html", context)
 
-
-# categories
-
+#category
 def det_category(request, id):
     category = Category.objects.get(id=id)
     cats = Category.objects.all()
@@ -117,7 +116,6 @@ def det_category(request, id):
 
 
 # subscriptions
-
 def user_subscriptions(request):
     cats = Category.objects.all()
     user = request.user
