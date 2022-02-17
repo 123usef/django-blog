@@ -3,8 +3,10 @@
   {% endblock %}
 
   {% block main_block %}
-
-<form method="POST" action="{% url 'create_post' %}">{% csrf_token %}
+  
+<div class="container" style="margin-top: 5%;">
+  <h2>Create Post <span class="badge bg-secondary">New</span></h2>
+<form method="POST" enctype="multipart/form-data" action="{% url 'create_post' %}">{% csrf_token %}
     <!-- <input type="hidden" name="user_id" value="{{form.user_id}}"> -->
     <div class="mb-3">
       <label for="recipient-name" class="col-form-label">Title:</label>
@@ -37,5 +39,5 @@
     </div>
   </form>
   {% if messages %} <ul class="messages"> {% for message in messages %} <li class="{{ message.tags }}">{{ message }}</li> {% endfor %} </ul> {% endif %}
-
+</div>
   {% endblock %}
