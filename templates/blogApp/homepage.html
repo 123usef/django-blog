@@ -1,7 +1,6 @@
 {% extends 'blogApp/base.html' %}
 {% load static %}
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,27 +11,49 @@
   <title>homepage</title>
 </head>
 
-<body>
-  {% block title_block %}
-  {% endblock %}
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>homepage</title>
+  </head>
 
-  {% block main_block %}
+  <body>
+    {% block title_block %} 
+    {% endblock %}
+     {% block main_block %}
 
   <div class="container" style="margin-top: 3%;">
     <div class="row">
       {% for x in posts %}
-      <div class="card text-white  col-3" style="width: 18rem;background-color: #0e0d0d;">
+      
+      <div class="card text-white  col-3 offset-1" style="width: 18rem;background-color: #0e0d0d;  margin-top:1%; ">
         <a href="{% url 'post' %}"><img src="{% static 'img/home.jpg' %}" class="card-img-top" style="height:30vh" alt="..."></a>
         <div class="card-body">
           <h3>{{ x.post_title }}</h3>
           <p class="card-text">Date</p>
           <a href="{% url 'post' x.id  %}" class='btn btn-primary'> Details </a>
         </div>
+        </div>
+        {% endfor %} 
       </div>
-      {% endfor %}
-    </div>
-  </div>
+        <hr>
 
-  {% endblock %}
-</body>
+        <div class="row">
+        {% for x in ln %} 
+      <div class="card text-white  col-3 offset-1 " style="width: 18rem;background-color: #0e0d0d;">
+        <a href="{% url 'post' %}"><img src="{{ x.urlToImage }}" class="card-img-top" style="height:30vh" alt="..."></a>
+        <div class="card-body">
+          <h3>{{ x.author }}</h3>
+          <h4>{{ x.title }}</h4>
+          <h6>{{ x.publishedAt }}</h6>
+          <p class="card-text">{{ x.articles.description }}</p>
+          <!-- <a href="{% url 'post'   %}" class='btn btn-primary'> Details </a> -->
+        </div>
+      </div>
+        {% endfor %} 
+    </div>
+    </div>
+    {% endblock %}
+  </body>
 </html>
