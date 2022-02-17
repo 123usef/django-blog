@@ -1,28 +1,31 @@
-{% extends 'blogApp/base.html' %} 
-{% load static %}
+  {% extends 'blogApp/base.html' %} 
+  {% load static %}
  
-{% block title_block %} 
- 
-{%endblock %} 
+  {% block title_block %} 
+  
+  {%endblock %} 
 
  {% block main_block %} 
- {% if post %}
- {% for ps in post %}
- <div class="container">
-<div class="card" style="width: 18rem; background-color:#242424; margin-top: 3%;">
-  <img src="{% static 'img/home.jpg' %}" class="card-img-top" alt="..." />
-  <div class="card-body">
-    <h5 class="card-title">{{ps.post_title}}</h5>
-    <p class="card-text " >{{ps.post_content}}</p>
-    <a href='{% url "post" ps.id %}' class="btn btn_style">view post</a>
-  </div>
-</div>
-{% endfor %} 
-{% else%}
-<div class="alert alert-danger" role="alert">
-    there is no post with this title 
-  </div>
-</div>
+    <div class="container" style="margin-top: 3%">
+      {% if post %}
+        <div class="row">
+        {% for ps in post %}
+          <div class="card text-white col-4 offset-1" style="width: 25%;background-color: #242424;  margin-top: 2%; border: 1px solid #9b59b6;">
+            <a href="{% url 'post' ps.id  %}"><img src="{{ ps.post_picture.url }}" class="card-img-top" style="height:30vh; width:100%; object-fit: cover; " alt="post-image"></a>
+            <div class="card-body">
+              <p><h3>{{ ps.post_title }}</h3></p>
+              <p> Created By : <strong>{{ps.user_id.username}} </strong></p>
+              <p><cite >Date :{{ps.post_cr_date}}</cite></p>
+            </div>
+            <a href="{% url 'post' ps.id  %}" class='btn btn_style' style="margin-bottom: 1%;"> Details </a>
+          </div>
+        {% endfor %} 
+      {% else%}
+          <div class="alert alert-danger" role="alert">
+              there is no post with this title 
+            </div>
+          </div>
+      {% endif %}
+    </div>
 
-{% endif %}
-{% endblock %}
+  {% endblock %}

@@ -25,5 +25,27 @@ urlpatterns = [
   #  Comment
    path('comment/<int:id>' , views.add_comment , name='add_comment'),
 
+   #admin list all
+  path('useradmin/',views.useradmin , name = 'useradmin'),
+  path('list_post/',views.list_post , name = 'list_post'),
+  path('list_users/',views.list_users , name = 'list_users'),
+  path('list_categories/',views.list_categories , name = 'list_categories'),
+
+#admin locked user
+  path('locked/<int:id>',views.locked, name='locked'),
+  path('unlocked/<int:id>',views.unlocked, name='unlocked'),
+# admin crud post
+  path('deletepost/<int:id>',views.deletepost, name='deletepost'),
+  path('updatepost/<int:id>',views.updatepost, name='updatepost'),
+
+  path('deletecategory/<int:id>',views.deletecategory, name='deletecategory'),
+  path('updatecategory/<int:id>',views.updatecategory, name='updatecategory'),
+
+
+
+
+
+  
+   
 ]
 

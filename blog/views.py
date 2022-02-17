@@ -2,7 +2,7 @@ from curses import meta
 from multiprocessing import context
 from django.shortcuts import redirect, render
 from django.contrib.auth.forms import UserCreationForm
-from .forms import CreateForm, CreatePost
+from .forms import CreateForm ,PostForm,CategoryForm,CreatePost
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import ListView
 from .models import Comment, Post, Reaction, Subscriptions, User, Category
@@ -56,9 +56,13 @@ def userlogin(request):
             username = request.POST.get("username")
             password = request.POST.get("password")
             user = authenticate(request, username=username, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect("homepage")
+            if user is not None :
+                if user.user_status == 'unlocked':
+                    login(request, user)
+                    return redirect("home")
+                else:
+                    messages.error(request, "Your account is locked, please contact an admin.")
+                    return redirect("login")      
             else:
                 messages.error(request, "Username or passwoed is incorrecrt")
                 return redirect("login")
@@ -136,7 +140,6 @@ def subscribe(request, id):
     category = Category.objects.get(id=id)
     subscribe = Subscriptions.objects.create(user_id=request.user, cat_id=category)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
-
 
 
 def unsubscribe(request, id):
@@ -222,4 +225,78 @@ def add_comment(request,id):
 
 
 
+# search method
+def search(request):
+    if request.method == "GET":
+        user_value = request.GET.get("search_value")
+        result = Post.objects.all().filter(post_title__contains=user_value)
+        context = {"post": result}
+        return render(request, "blogApp/search_results.html", context)
+    
+#admin_list_all_posts
+def list_post(request):
+        all_posts = Post.objects.all() 
+        context = { "posts" : all_posts }
+        return render(request, "blogApp/admin.html", context)
+def list_users(request):
+        all_users = User.objects.all()   
+        context = { "users" : all_users }
+        return render(request, "blogApp/admin.html", context)
+
+def list_categories(request):
+        all_categories = Category.objects.all()   
+        context = { "categories" : all_categories }
+        return render(request, "blogApp/admin.html", context)
+
+#locked user
+def locked(request, id):
+    userlock = User.objects.get(id = id)
+    userlock.user_status = 'locked'
+    userlock.save()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+def unlocked(request, id):
+    userlock = User.objects.get(id = id)
+    userlock.user_status = 'unlocked'
+    userlock.save()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+#post crud   
+
+def updatepost(request, id):
+    post = Post.objects.get(id = id)
+    if request.method == 'POST':
+        form = PostForm(request.POST ,instance=post )
+        if form.is_valid():
+            form.save()
+            return redirect('list_post')
+        
+    form = PostForm(instance = post)
+    context = {'form' : form} 
+    return render(request, 'blogApp/updatepost.html' , context)
+def updatecategory(request, id):
+    category = Category.objects.get(id = id)
+    if request.method == 'POST':
+        form = CategoryForm(request.POST ,instance=category )
+        if form.is_valid():
+            form.save()
+            return redirect('list_categories')
+        
+    form = CategoryForm(instance = category)
+    context = {'form' : form} 
+    return render(request, 'blogApp/updatecategory.html' , context)
+    
+def deletepost( request, id ):
+    post = Post.objects.get(id = id)
+    post.delete()
+    return redirect('list_post')
+#category crud  
+def deletecategory( request, id ):
+    category = Category.objects.get(id = id)
+    category.delete()
+    return redirect('list_categories')
+      
+    
+
+    
 
