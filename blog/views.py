@@ -109,7 +109,7 @@ def det_category(request, id):
     if request.user.is_authenticated:
         subs = user.subscriptions_set.all()
     
-    posts = category.post_set.all().order_by("-post_cr_date")
+    posts = category.post_set.all().order_by("post_cr_date")
     context = {"posts": posts, "cats": cats}
 
     return render(request, "blogApp/homepage.html", context)
@@ -171,7 +171,7 @@ def create_post(request):
     # user = request.user
     # form = CreatePost()
     if request.method == "POST":
-        form = CreatePost(request.POST)
+        form = CreatePost(request.POST,request.FILES)
         if form.is_valid():
             sv=form.save(commit=False)
             sv.user_id_id=request.user.id

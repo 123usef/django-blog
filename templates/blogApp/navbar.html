@@ -21,48 +21,12 @@
             </li>
             {% if user.is_authenticated %}
             <li class="nav-item col-2">
-            <a href="{% url 'create_post' %}">Create Post</a></li>
-            <!--   <a class="nav-link main_color link-light" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo"><i class="fa-solid fa-comment-plus text-white"></i>Create Post</a>
-
-              <div class="modal fade text-dark" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog ">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel"></h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      <form method="POST" action="{% url 'create_post' %}">{% csrf_token %}
-                        <div class="mb-3">
-                          <label for="recipient-name" class="col-form-label">Title:</label>
-                          <input type="text" class="form-control" id="recipient-name" name="post_title">
-                        </div>
-                        
-                        <div class="mb-3">
-                          <label for="recipient-name" class="col-form-label">Category:</label>
-                          <input type="text" class="form-control" id="recipient-name" name="post_category">
-                        </div>
-                        <div class="mb-3">
-                          <label for="message-text" class="col-form-label">Content:</label>
-                          <textarea class="form-control" id="message-text" name="post_content"></textarea>
-                        </div>
-                        <div class="mb-3">
-                          <label for="recipient-name" class="col-form-label">Upload image:</label>
-                          <input type="file" class="form-control" id="recipient-name" accept="image/*" name="post_image"/>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                          <button type="submit" class="btn btn_style">Post</button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </li> -->
+            <a  class="nav-link main_color link-light" aria-current="page" href="{% url 'create_post' %}">Create Post</a>
+          </li>
+           
             {% endif %}
             <form class="d-flex col-2" action="{% url 'search' %}" method="get">
-              <input class="form-control bg-dark bg-gradient p-2 text-white bg-opacity-75 me-2 " name="search_value" type="search" placeholder="Search" aria-label="Search">
+              <input class="form-control  bg-gradient p-2 text-dark bg-opacity-75 me-2 " name="search_value" type="search" placeholder="Search" aria-label="Search">
               <button type=""submit class="btn btn_style">search</button>
             </form>
             {% if user.is_authenticated %}
