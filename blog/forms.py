@@ -2,7 +2,7 @@
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from .models import Post, User
+from .models import User , Post , Category
 
 
 class CreateForm(UserCreationForm):
@@ -31,3 +31,17 @@ class CreatePost(forms.ModelForm):
              # 'post_picture' : forms.ImageField(),attrs={
                 #     'class':'form-control'
                 # }
+        
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['post_title', "post_content","cat_id","post_picture"]
+        
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = ['cat_name']
+
+
+        
+

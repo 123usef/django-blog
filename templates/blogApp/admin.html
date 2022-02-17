@@ -15,6 +15,95 @@
 
 {% block main_block %}
 
+<div class="container">
+    <a href="{% url 'list_users' %}" type="button" class="btn btn_style">Users</a>
+    <Table border="2"   class="table table-primary">
+        <tr class="row">
+            <th class="col-2">User Name</th>
+            <th class="col-2">Password</th>
+            <th class="col-2">Email</th>
+            <th class="col-2">Date</th>
+            <th class="col-2">Status</th>
+            <th class="col-1">Role</th>
+            <th class="col-1"></th>
+
+        </tr>
+        {% for user in users %}
+        <tr class="row"> 
+            <th class="col-2">{{ user.username }}</th>
+            <th class="col-2">{{ user.password }}</th>
+            <th class="col-2">{{ user.email}}</th>
+            <th class="col-2">{{ user.date_joined }}</th>
+            <th class="col-2">{{ user.user_status }}</th>
+            {% if user.user_role == "admin" %}
+                <th class="col-1" style="background-color: #fa3200;">{{ user.user_role }}</th>
+            {% else %}
+                <th class="col-1">{{ user.user_role }}</th>
+            {% endif %}
+
+            {% if user.user_role == "admin" %}
+                <th class="col-1"> <a type="button" class="btn btn_style" disabled>block</a></th>
+            {% elif user.user_status == "locked" %}
+                <th class="col-1"> <a href="{% url 'unlocked' user.id %}" type="button" class="btn btn_style">Unblock</a></th>
+            {% else %} 
+                <th class="col-1"> <a href="{% url 'locked' user.id %}" type="button" class="btn btn_style">block</a></th>
+            {% endif %}
+                
+        </tr>
+        {% endfor %}
+    </Table>
+    
+    <a href="{% url 'list_post' %}" type="button" class="btn btn_style">Posts</a>
+    <a type="button" class="btn btn_style">Add Post</a>
+
+    <Table border="2"   class="table table-primary">
+        <tr>
+            <th>Title</th>
+            <th>Picture</th>
+            <th>Content</th>
+            <th>Date</th>
+            <th>Category</th>
+            <th>User</th>
+            <th></th>
+            <th></th>
+
+        </tr>
+        {% for post in posts %}
+        <tr>
+            <th>{{ post.post_title }}</th>
+            <th>{{ post.post_picture }}</th>
+            <th>{{ post.post_content}}</th>
+            <th>{{ post.post_cr_date }}</th>
+            <th>{{ post.cat_id }}</th>
+            <th>{{ post.user_id }}</th>
+            <th > <a href="{% url 'updatepost' post.id %}" type="button" class="btn btn_style">Update</a></th>
+            <th > <a href="{% url 'deletepost' post.id %}" type="button" class="btn btn_style">Delete</a></th>
+
+        </tr>
+        {% endfor %}
+    </Table>
+    <a href="{% url 'list_categories' %}" type="button" class="btn btn_style">Categories</a>
+    <a type="button" class="btn btn_style">Add Category</a>
+
+    <Table border="2"   class="table table-primary">
+        <tr>
+            <th>Category Name</th>
+            <th></th>
+            <th></th>
+
+            
+        </tr>
+        {% for cat in categories %}
+        <tr>
+            <th>{{ cat.cat_name }}</th>
+            <th > <a href="{% url 'updatecategory' cat.id %}" type="button" class="btn btn_style">Update</a></th>
+            <th > <a href="{% url 'deletecategory' cat.id %}" type="button" class="btn btn_style">Delete</a></th>
+            
+        </tr>
+        {% endfor %}
+    </Table>
+</div>
+  
 {% endblock %}
     
 </body>
