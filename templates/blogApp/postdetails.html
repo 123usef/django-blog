@@ -5,16 +5,18 @@
   {% block main_block %}
 
   {{post.post_title}}
-  {{comment.cmnt_content}}
   <a href="{% url 'add_reaction' id=post.id  react='like'  %}" class="btn btn-primary">
     Like <span class="badge bg-secondary">{{likes}}</span>
   </a>
   <a href="{% url 'add_reaction' id=post.id react='dislike' %}" class="btn btn-primary">
     Dislike <span class="badge bg-secondary">{{dislikes}}</span>
   </a>
-    {% comment %} <a href="{% url 'add_reaction' id=post.id  react='like'  %}"   class='btn btn-primary' > like </a>
-
-    <a href="{% url 'add_reaction' id=post.id react='dislike' %}"  class='btn btn-danger' > dislike </a>  {% endcomment %}
-
+    <form method="POST" action="{% url 'add_comment' post.id %}">{% csrf_token %}
+      <input type="text" name="comment_content" />
+      <input type="submit" value="comment">
+    </form>
+    {% for comment in comments %}
+    {{comment.cmnt_content}}
+    {% endfor %}
     <a href="{% url 'homepage'%}" class='btn btn-info'> back to all posts </a>
   {% endblock %}
