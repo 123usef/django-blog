@@ -11,8 +11,8 @@ class User(AbstractUser):
 
     statuses = (("locked", "locked"), ("unlocked", "unlocked"))
     roles = (("user", "user"), ("admin", "admin"))
-    user_status = models.CharField(max_length=20, choices=statuses)
-    user_role = models.CharField(max_length=20, choices=roles)
+    user_status = models.CharField(max_length=20, choices=statuses, default="unlocked")
+    user_role = models.CharField(max_length=20, choices=roles, default="user")
 
     def __str__(self):
         return self.username
@@ -42,9 +42,9 @@ class Subscriptions(models.Model):
 
 
 class Post(models.Model):
-    post_title = models.CharField(max_length=30)
+    post_title = models.CharField(max_length=300)
     post_picture = models.ImageField(null=True, blank=True , upload_to="img/")
-    post_content = models.CharField(max_length=500)
+    post_content = models.CharField(max_length=5000)
     post_cr_date = models.DateTimeField(auto_now_add=True)
     cat_id = models.ForeignKey(Category, on_delete=models.CASCADE)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -64,7 +64,6 @@ class Tags(models.Model):
 
 
 # create comment.s
-
 
 class Comment(models.Model):
     cmnt_cr_date = models.DateTimeField(auto_now_add=True)

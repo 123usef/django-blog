@@ -8,72 +8,205 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
      <link rel="stylesheet" href="{% static 'css/style.css' %}">
      <style>
-        body,
-        html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            background-image: url("https://images.pexels.com/photos/4050347/pexels-photo-4050347.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260");
-            background-size: cover;
-            background-repeat: no-repeat;
-        }
-        .user_card {
-            height: 50%;
-        }
-        .form_container {
-            margin-top: 20px;
-        }
-     </style>
+        
+* {
+	margin: 0;
+	padding: 0;
+	outline: none;
+  }
+  
+  :root {
+	--main-color: #fff;
+	--second-color: #347deb;
+	--box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  html {
+	height: 100%;
+  }
+  body {
+	background-image: linear-gradient(310deg, #df98fa, #9055ff);
+	font-family: sans-serif;
+  }
+
+  /* login - signup .s */
+  #container {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	background-color: var(--main-color);
+	width: 1200px;
+	height: 800px;
+	border-radius: 10px;
+	display: grid;
+	grid-template-columns: repeat(2, 50%);
+	box-shadow: var(--box-shadow);
+	transition-duration: 1s;
+  }
+  
+  #left, #right {
+	margin: auto;
+	width: 95%;
+	height: 96%;
+	border-radius: 10px;
+  }
+  
+  #left {
+	background-image: url("https://images.unsplash.com/photo-1615400014497-55726234cccb?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTYxNzg4Njg0Ng&ixlib=rb-1.2.1&q=85");
+	background-size: cover;
+	background-position: center;
+	box-shadow: var(--box-shadow);
+  }
+  #welcome, #lorem {
+	margin: 20px;
+	text-shadow: var(--box-shadow);
+  }
+  #welcome {
+	font-size: 75px;
+	font-weight: 300;
+	margin-top: 330px;
+	text-shadow: var(--box-shadow);
+  }
+  
+  #login {
+	padding-top: 35%;
+	text-align: center;
+	text-transform: uppercase;
+	font-weight: 100%;
+	text-shadow: var(--box-shadow);
+	color: #242424;
+  }
+  .client-info {
+	display: block;
+	margin: 20px auto;
+	width: 60%;
+	height: 50px;
+	border: solid #999 1px;
+	border-radius: 5px;
+	text-indent: 15px;
+	transition: all 200ms;
+	box-shadow: var(--box-shadow);
+  }
+  .client-info:focus {
+	width: 80%;
+  }
+  label {
+	position: absolute;
+	margin: -76px 130px;
+	  font-size: 12px;
+	  white-space: nowrap;
+	  background: #fff;
+	  padding: 0 5px;
+	  color: #999;
+	transition: all 200ms;
+	text-shadow: var(--box-shadow);
+  }
+  #email:focus ~ label[for="email"] {
+	margin: -76px 70px;
+  }
+  #password:focus ~ label[for="password"] {
+	margin: -76px 70px;
+  }
+  #submit {
+	border: none;
+	background-color: #9055ff;
+	color: white;
+	width: 60%;
+  }
+  #submit:hover {
+	background-color: #df98fa;
+  }
+  
+  @media (max-width: 1250px) {
+   
+	#container {
+	  width: 600px;
+	  display: block;
+	}
+	#left {
+	  display: none;
+	}
+	#right {
+	  margin-top: 16px;
+	  background-image: url("https://images.unsplash.com/photo-1615400014497-55726234cccb?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTYxNzg4Njg0Ng&ixlib=rb-1.2.1&q=85");
+	  background-size: cover;
+	  background-position: center;
+	  box-shadow: var(--box-shadow);
+	}
+  }
+  @media (max-height: 850px) {
+   
+	#container {
+	  width: 1000px;
+	  height: 600px;
+	}
+	#login {
+	  padding-top: 20%;
+	}
+	#welcome {
+	  margin-top: 240px;
+	  font-size: 60px;
+	}
+	#lorem {
+	  font-size: 15px;
+	}
+	
+  }
+</style>
 </head>
 <body>
-	<div class="container h-100">
-		<div class="d-flex justify-content-center h-100">
-			<div class="user_card bg-dark">
-				<div class="d-flex justify-content-center">
-					<h3 id="form-title">SIGN UP</h3> 
-				</div>
-				<div class="d-flex justify-content-center form_container">
-					<form method="POST" action="">{% csrf_token %}
-						<div class="input-group mb-4">
-							<div class="input-group-append">
-								<span class="input-group-text"><i class="fas fa-user"></i></span>
-							</div>
-							<!-- <input type="text" name="username" placeholder="Username..." class="form-control "> -->
-                            {{ form.username }}
-						</div>
-                        <div class="input-group mb-4">
-							<div class="input-group-append">
-								<span class="input-group-text"><i class="fas fa-user"></i></span>
-							</div>
-							<!-- <input type="email" name="email" placeholder="Email..." class="form-control "> -->
-                            {{ form.email }}
-						</div>
-						<div class="input-group mb-3">
-							<div class="input-group-append">
-								<span class="input-group-text"><i class="fas fa-key"></i></span>
-							</div>
-								<!-- <input type="password" name="password" placeholder="Password..." class="form-control" > -->
-                                {{ form.password1 }}
-						</div>
-                        <div class="input-group mb-3">
-							<div class="input-group-append">
-								<span class="input-group-text"><i class="fas fa-key"></i></span>
-							</div>
-								<!-- <input type="password" name="confirmpassword" placeholder="Confirm Password..." class="form-control" > -->
-                                {{ form.password2 }}
-						</div>
+	
+<div id="container">
 
-							<div class="d-flex justify-content-center mt-3 login_container">
-				 				<input class="btn login_btn" type="submit" value="Sign up">
-				   			</div>
-					</form>
+{% comment %} left section of form {% endcomment %}
+       <div id="left">
 
-				</div>
-                {{ form.errors }}
-			</div>
-			</div>
-		</div>
-	</div>
-</body>
+	{% comment %} home button {% endcomment %}
+	<button type="button" class="btn btn-dark"><a 
+	   class="navbar-brand  main_color text-white" 
+	   href="{% url 'home' %}"> Home</a></button>
 
+    {% comment %} login button {% endcomment %}
+	<button type="button" class="btn btn-light">
+		<a class="navbar-brand  main_color text-dark" 
+		href="{% url 'login' %}"> Login</a></button>
+
+   {% comment %} text left side  {% endcomment %}
+
+  <h1 id="welcome" style="color: black;">Welcome</h1>
+  <p id="lorem" style="color: black;">
+	If we talked about news world so we have to<br> talk about bytes N. <br>
+			Most integrated solutions that is using AI <br>algortihm to fetch news among the world as <br>a pieac of cake to you. <br>
+			Copywrites goes to the most creative team <br>ever that you will ever meet. <br>
+			shoutout to us!<br>
+  </p>
+</div>
+
+{% comment %} right side registeration form {% endcomment %}
+   <div id="right">
+   <form method="POST" action="">{% csrf_token %}
+  <h1 id="login">Signup</h1><br>
+
+  {% comment %} username {% endcomment %}
+
+  <input type="text" id="username" class="client-info" {{ form.username }}
+  <label for="username">username</label>
+
+   {% comment %} email {% endcomment %}
+  <input type="email" id="email" class="client-info" {{ form.email }}
+  <label for="email">email</label>
+
+  {% comment %} password1 {% endcomment %}
+  <input type="password" id="password" class="client-info" {{ form.password1 }}
+  <label for="password">Password</label>
+
+  {% comment %} password2 {% endcomment %}
+  <input type="password" id="password" class="client-info" {{ form.password2 }}
+  <label for="password"> Enter Password again</label>
+
+  {% comment %} submit {% endcomment %}
+  <input type="submit" id="submit" class="client-info" value="Signup">
+  </form>
+{% comment %} registeration form ended {% endcomment %}
 </html>

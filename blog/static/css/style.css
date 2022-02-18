@@ -111,5 +111,22 @@ body{
     color: #9055ff;
 }
 
+  /*slider style  */
+  @import url('pick a font');
+  body {
+      /*font: normal 1em 'font';*/
+      background-color: #ecfab6;
+  }
   
-
+  main {
+      margin-top: 4.5em;
+  }
+  #section1 {
+      height: 45em;
+  }
+  
+  
+  
+  
+  
+  

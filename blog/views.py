@@ -50,7 +50,7 @@ def register(request):
 #login
 def userlogin(request):
     if request.user.is_authenticated:
-        return redirect("homepage")
+        return redirect("home")
     else:
         if request.method == "POST":
             username = request.POST.get("username")
@@ -86,13 +86,14 @@ api_post = response.json()
 ln = api_post["articles"]
 
 def homepage(request):
+    user = request.user
     cats = Category.objects.all()
     posts = Post.objects.all()
-   
+    subs = user.subscriptions_set.all()
     if request.user.is_authenticated:
         return redirect("user_subscriptions")
 
-    context = {"cats": cats, "posts": posts ,  "ln":ln }
+    context = {"cats": cats, "posts": posts ,"subs": subs ,"ln":ln }
     return render(request, "blogApp/homepage.html", context)
 
 
@@ -131,7 +132,7 @@ def user_subscriptions(request):
         posts = Post.objects.all()
     else:
         posts = Post.objects.filter(cat_id__in=subs_id)
-    context = {"posts": posts, "cats": cats, "subs_id": subs_id,"ln":ln}
+    context = {"posts": posts, "cats": cats, "subs_id": subs_id,"ln":ln, "subs":subs}
     return render(request, "blogApp/homepage.html", context)
 
 
@@ -274,6 +275,7 @@ def updatepost(request, id):
     form = PostForm(instance = post)
     context = {'form' : form} 
     return render(request, 'blogApp/updatepost.html' , context)
+
 def updatecategory(request, id):
     category = Category.objects.get(id = id)
     if request.method == 'POST':
@@ -290,6 +292,7 @@ def deletepost( request, id ):
     post = Post.objects.get(id = id)
     post.delete()
     return redirect('list_post')
+    
 #category crud  
 def deletecategory( request, id ):
     category = Category.objects.get(id = id)
