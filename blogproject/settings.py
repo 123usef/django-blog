@@ -86,6 +86,11 @@ DATABASES = {
     }
 }
 
+# REST_FRAMEWORK = {
+#     'DEFAULT_PAGINATION_CLASS': 'my_project.apps.core.pagination.CustomPagination',
+#     'PAGE_SIZE': 100
+# }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
