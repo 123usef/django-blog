@@ -2,7 +2,7 @@
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from .models import User , Post , Category
+from .models import User , Post , Category ,ForbiddenWords
 
 
 class CreateForm(UserCreationForm):

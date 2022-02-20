@@ -9,7 +9,7 @@ admin.site.register(Post)
 admin.site.register(Tags)
 admin.site.register(Comment)
 admin.site.register(Reaction)
-
+admin.site.register(ForbiddenWords)
 
 
 

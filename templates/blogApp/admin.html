@@ -109,11 +109,11 @@
             <th></th>
             <th></th>
         </tr>
-        {% for word in ForbiddenWords %}
+        {% for word in forbidden_word %}
         <tr>
             <th>{{ word.name }}</th>
-            <th > <a href="{% url 'updateforbidden_word' cat.id %}" type="button" class="btn btn_style">Update</a></th>
-            <th > <a href="{% url 'del_forbidden_word' cat.id %}" type="button" class="btn btn_style">Delete</a></th>
+            <th > <a href="{% url 'updateforbidden_word' word.id %}" type="button" class="btn btn_style">Update</a></th>
+            <th > <a href="{% url 'del_forbidden_word' word.id %}" type="button" class="btn btn_style">Delete</a></th>
             
         </tr>
         {% endfor %}

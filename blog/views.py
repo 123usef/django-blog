@@ -2,19 +2,18 @@
 from multiprocessing import context
 from django.shortcuts import redirect, render
 from django.contrib.auth.forms import UserCreationForm
-from .forms import CreateForm ,PostForm,CategoryForm,CreatePost
+from .forms import CreateForm ,PostForm,CategoryForm,CreatePost,ForbiddenForm
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import ListView
-from .models import Comment, Post, Reaction, Subscriptions, User, Category
+from .models import Comment, Post, Reaction, Subscriptions, User, Category, ForbiddenWords
 from django.contrib import messages 
 from django.http import HttpResponseRedirect
 import requests
+from django.core.mail import send_mail
+from django.conf import settings
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-# import pagination
-# from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-# from django.core.paginator import Paginator
-# Create your views here.
 
 
 def base(request):
@@ -32,8 +31,8 @@ def post(request):
 def useradmin(request):
     return render(request, 'blogApp/admin.html')
 
-# def pagination(request):
-#     return render(request, 'blogApp/footer.html')
+def pagination(request):
+    return render(request, 'blogApp/pagination.html')
 
 #register
 
@@ -88,16 +87,13 @@ response = requests.get('https://newsapi.org/v2/everything?'
        'apiKey=b6ddcbd6ea8a4a418617efe10b23cb0c')
 api_post = response.json()
 ln = api_post["articles"]
-
 def homepage(request):
     user = request.user
     cats = Category.objects.all()
     posts = Post.objects.all()
-    # subs = user.subscriptions_set.all()
     if request.user.is_authenticated:
          subs = user.subscriptions_set.all()
          return redirect("user_subscriptions")
-# context = {"cats": cats, "posts": posts ,"subs": subs ,"ln":ln }
     context = {"cats": cats, "posts": posts ,"ln":ln }
     return render(request, "blogApp/homepage.html", context)
 
@@ -107,6 +103,24 @@ def profile(request):
     result = Post.objects.filter(user_id=user_id)
     context = { "posts" : result }          
     return render(request, "blogApp/profile.html",context)
+
+    
+ # pagination 5 recent posts .bonus   
+def pagination(request):
+     posts = Post.objects.all()
+     paginator = Paginator(posts,5)
+     page = request.GET.get('page')
+     try:
+        myposts = paginator.page(page)
+     except PageNotAnInteger:
+        myposts = paginator.page(1)
+     except EmptyPage:
+        myposts = paginator.page(paginator.num_pages) 
+         
+     context = {"posts": myposts}
+     return render(request, "blogApp/pagination.html", context)    
+
+
 
 # search method
 
@@ -148,10 +162,16 @@ def user_subscriptions(request):
 
 #subscribe
 def subscribe(request, id):
+    user_name = request.user.username
     user_id = request.user.id
     category = Category.objects.get(id=id)
+    user_email = request.user.email
+    send_mail("BYTES N subscription mail ", 
+    f'Hello {user_name} you have subscribed successfully in {category} welcome aboard',
+    settings.DEFAULT_FROM_EMAIL, [user_email])
     subscribe = Subscriptions.objects.create(user_id=request.user, cat_id=category)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
 
  
 def unsubscribe(request, id):
@@ -184,8 +204,7 @@ def det_post(request, id):
 #create post 
 
 def create_post(request):
-    # user = request.user
-    # form = CreatePost()
+
     if request.method == "POST":
         form = CreatePost(request.POST,request.FILES)
         if form.is_valid():
@@ -227,11 +246,24 @@ def add_reaction(request, id, react):
 def add_comment(request,id):
     user = request.user
     post = Post.objects.get(id=id)
+    f_words = ForbiddenWords.objects.all()
 
     if request.method == "POST":
-       comment_content = request.POST.get('comment_content')
-       Comment.objects.create(post_id=post, user_id=user, cmnt_content=comment_content)
-    
+        comment_content = request.POST.get('comment_content')
+        comment_words = comment_content.split()
+        y = 0
+        z = []
+        for word in comment_words:
+            for f_word in f_words:
+                if word == f_word.name:
+                    y = comment_words.index(word)
+                    z.append(y)
+        for i in z:
+            le = len(comment_words[i])
+            comment_words[i]='*'*le
+        x=' '.join(comment_words)
+        Comment.objects.create(post_id=post, user_id=user, cmnt_content=x)
+
     return redirect('post',id)
 
 
@@ -298,17 +330,16 @@ def addcategory(request):
 #Add forbidden_word
 def addforbidden_word(request):
     if request.method == "POST":
-        form = ForbiddenWords(request.POST)
+        form = ForbiddenForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect ('list_forbidden_word')
     else:
-        form = ForbiddenWords()
+        form = ForbiddenForm()
         context = {'form': form}
         return render (request, 'blogApp/add_forbidden.html', context) 
     
 
-#update post 
 def updatepost(request, id):
     user = request.user
     post = Post.objects.get(id = id)
