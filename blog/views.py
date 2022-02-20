@@ -29,10 +29,6 @@ def post(request):
     return render(request, "blogApp/post.html")
 
 
-def profile(request):
-    return render(request, "blogApp/profile.html")
-
-
 def useradmin(request):
     return render(request, 'blogApp/admin.html')
 
@@ -105,6 +101,12 @@ def homepage(request):
     context = {"cats": cats, "posts": posts ,"ln":ln }
     return render(request, "blogApp/homepage.html", context)
 
+def profile(request):
+    #user = User.objects.get(id=id)
+    user_id = request.user
+    result = Post.objects.filter(user_id=user_id)
+    context = { "posts" : result }          
+    return render(request, "blogApp/profile.html",context)
 
 # search method
 
@@ -259,6 +261,12 @@ def list_categories(request):
         context = { "categories" : all_categories }
         return render(request, "blogApp/admin.html", context)
 
+def list_forbidden_word(request):
+        all_forbidden_word = ForbiddenWords.objects.all()  
+        context = { "forbidden_word" : all_forbidden_word }
+        return render(request, "blogApp/admin.html", context)
+    
+    
 #locked user
 def locked(request, id):
     userlock = User.objects.get(id = id)
@@ -275,18 +283,47 @@ def unlocked(request, id):
 
 #post crud   
 
+#Add category
+def addcategory(request):
+    if request.method == "POST":
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect ('list_categories')
+    else:
+        form = CategoryForm()
+        context = {'form': form}
+        return render (request, 'blogApp/create_category.html', context) 
+
+#Add forbidden_word
+def addforbidden_word(request):
+    if request.method == "POST":
+        form = ForbiddenWords(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect ('list_forbidden_word')
+    else:
+        form = ForbiddenWords()
+        context = {'form': form}
+        return render (request, 'blogApp/add_forbidden.html', context) 
+    
 
 #update post 
 def updatepost(request, id):
+    user = request.user
     post = Post.objects.get(id = id)
     if request.method == 'POST':
         form = PostForm(request.POST ,instance=post )
         if form.is_valid():
             form.save()
-            return redirect('list_post')
+            if user.user_role == 'admin':
+                return redirect('list_post')
+            else:
+                return redirect("profile")
+
         
     form = PostForm(instance = post)
-    context = {'form' : form} 
+    context = {'form' : form , 'id':id} 
     return render(request, 'blogApp/updatepost.html' , context)
 
 #update category
@@ -299,21 +336,47 @@ def updatecategory(request, id):
             return redirect('list_categories')
         
     form = CategoryForm(instance = category)
-    context = {'form' : form} 
+    context = {'form' : form , 'id':id} 
     return render(request, 'blogApp/updatecategory.html' , context)
+
+#update forbidden_word
+def updateforbidden_word(request, id):
+    forbidden = ForbiddenWords.objects.get(id = id)
+    if request.method == 'POST':
+        form = ForbiddenForm(request.POST ,instance=forbidden )
+        if form.is_valid():
+            form.save()
+            return redirect('list_forbidden_word')
+        
+    form = ForbiddenForm(instance = forbidden)
+    context = {'form' : form , 'id':id} 
+    return render(request, 'blogApp/updateforbidden.html' , context)
+
 
  #delete post   
 def deletepost( request, id ):
+    user = request.user
     post = Post.objects.get(id = id)
     post.delete()
-    return redirect('list_post')
+    if user.user_role == 'admin':
+        return redirect('list_post')
+    else:
+        return redirect("profile")
     
-#category crud
-
 #delete category  
 def deletecategory( request, id ):
     category = Category.objects.get(id = id)
     category.delete()
     return redirect('list_categories')
+
+#delete forbidden_word  
+def del_forbidden_word( request, id ):
+    forbidden = ForbiddenWords.objects.get(id = id)
+    forbidden.delete()
+    return redirect('list_forbidden_word')
+
+
+
+
              
 

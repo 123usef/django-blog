@@ -75,3 +75,9 @@ class Reaction(models.Model):
     reaction = models.CharField(max_length=8, choices=roles)
     post_id = models.ForeignKey(Post, on_delete=models.CASCADE)  # fk-post
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)  # fk-user
+        
+class ForbiddenWords(models.Model):
+    name = models.CharField(max_length=200)
+    def __str__(self):
+        return self.name
+    

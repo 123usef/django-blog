@@ -34,6 +34,8 @@ urlpatterns = [
   path('list_post/',views.list_post , name = 'list_post'),
   path('list_users/',views.list_users , name = 'list_users'),
   path('list_categories/',views.list_categories , name = 'list_categories'),
+  path('list_forbidden_word/',views.list_forbidden_word , name = 'list_forbidden_word'),
+
 
 #admin locked user
   path('locked/<int:id>',views.locked, name='locked'),
@@ -42,8 +44,17 @@ urlpatterns = [
 # admin crud post
   path('deletepost/<int:id>',views.deletepost, name='deletepost'),
   path('updatepost/<int:id>',views.updatepost, name='updatepost'),
+  # admin crud category
   path('deletecategory/<int:id>',views.deletecategory, name='deletecategory'),
   path('updatecategory/<int:id>',views.updatecategory, name='updatecategory'),
+  path('addcategory',views.addcategory, name='addcategory'),
+  
+  # admin crud forbidden word
+  path('del_forbidden_word/<int:id>',views.del_forbidden_word, name='del_forbidden_word'),
+  path('updateforbidden_word/<int:id>',views.updateforbidden_word, name='updateforbidden_word'),
+  path('addforbidden_word',views.addforbidden_word, name='addforbidden_word'),
+
+
 
 
 

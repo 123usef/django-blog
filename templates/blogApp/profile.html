@@ -17,64 +17,26 @@
   {% endblock %}
 
   {% block main_block %}
-  <div class="container" style="margin-top: 3%;">
+<div class="container" style="margin-top: 3%;">
     <div class="row">
-      <div class="card text-white  col-3 offset-1" style="width: 18rem;background-color:#242424;  margin-left:1%">
-        <a href="{% url 'post' %}"><img src="{% static 'img/home.jpg' %}" class="card-img-top" style="height:30vh; width:105%;" alt="..."></a>
-        <div class="card-body">
-          <h3>Title</h3>
-          <h5 class="card-text">Date:</h5>
-        </div>
-        <div class="row">
-          <div class="col-4 offset-1">
-            <a class='btn btn_style ' data-bs-toggle="modal" data-bs-target="#example" data-bs-whatever="@mdo" style="margin-bottom: 1%;"> Update </a>
-
-            <div class="modal fade text-dark" id="example" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Update Post</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-                    <form>
-                      <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Title:</label>
-                        <input type="text" class="form-control" id="recipient-name">
-                      </div>
-                      
-                      <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Category:</label>
-                        <input type="text" class="form-control" id="recipient-name">
-                      </div>
-                      <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Date:</label>
-                        <input type="date" class="form-control" id="recipient-name">
-                      </div>
-                      <div class="mb-3">
-                        <label for="message-text" class="col-form-label">Content:</label>
-                        <textarea class="form-control" id="message-text"></textarea>
-                      </div>
-                      <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Upload image:</label>
-                        <input type="file" class="form-control" id="recipient-name" accept="image/*" />
-                      </div>
-                    </form>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn_style">Update</button>
-                  </div>
+            {% for post in posts %}
+              <div class="card text-white col-4 offset-1" style="width:25%;background-color: #242424;  margin-top: 2%; border: 1px solid #9b59b6;">
+                <a href="{% url 'post' %}"><img src="{{ post.post_picture.url }}" class="card-img-top" style="height:30vh; width:100%; object-fit: cover; " alt="post-image"></a>
+                <div class="card-body">
+                  <p><h3>{{ post.post_title }}</h3></p>
+                  <p> Created By : <strong>{{post.user_id.username}} </strong></p>
+                  <p>Category: {{post.cat_id}}</p>
+                  <p><cite >Date :{{post.post_cr_date}}</cite></p>
+                </div> 
+                <div class="row">
+                  <a href="{% url 'updatepost' post.id %}" class='btn btn_style col-4 offset-1' style="margin-bottom: 1%;"> Update </a>
+                  <a  href="{% url 'deletepost' post.id %}" class='btn btn_style col-4 offset-1' style="margin-bottom: 1%;"> Delete </a>
                 </div>
+                <a href="{% url 'post' post.id  %}" class='btn btn_style' style="margin-bottom: 1%;"> Details </a>
               </div>
-            </div>
-          </div>
-          <a class='btn btn_style col-4 offset-1' style="margin-bottom: 1%;"> Delete </a>
-        </div>
-      </div>
+              {%endfor%}
     </div>
-  </div>  
-
-  {% endblock %}
+</div>        
+{% endblock %}
 </body>
 </html>

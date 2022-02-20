@@ -54,7 +54,7 @@
     </Table>
     
     <a href="{% url 'list_post' %}" type="button" class="btn btn_style">Posts</a>
-    <a type="button" class="btn btn_style">Add Post</a>
+    <a href="{% url 'create_post' %}" type="button" class="btn btn_style">Add Post</a>
 
     <Table border="2"   class="table table-primary">
         <tr>
@@ -83,21 +83,37 @@
         {% endfor %}
     </Table>
     <a href="{% url 'list_categories' %}" type="button" class="btn btn_style">Categories</a>
-    <a type="button" class="btn btn_style">Add Category</a>
+    <a href="{% url 'addcategory' %}" type="button" class="btn btn_style">Add Category</a>
 
-    <Table border="2"   class="table table-primary">
+    <Table border="2" class="table table-primary">
         <tr>
             <th>Category Name</th>
             <th></th>
             <th></th>
-
-            
         </tr>
         {% for cat in categories %}
         <tr>
             <th>{{ cat.cat_name }}</th>
             <th > <a href="{% url 'updatecategory' cat.id %}" type="button" class="btn btn_style">Update</a></th>
             <th > <a href="{% url 'deletecategory' cat.id %}" type="button" class="btn btn_style">Delete</a></th>
+            
+        </tr>
+        {% endfor %}
+    </Table>
+    <a href="{% url 'list_forbidden_word' %}" type="button" class="btn btn_style">Forbidden Words</a>
+    <a href="{% url 'addforbidden_word' %}" type="button" class="btn btn_style">Add Forbidden Words</a>
+
+    <Table border="2" class="table table-primary">
+        <tr>
+            <th>Forbidden Words Name</th>
+            <th></th>
+            <th></th>
+        </tr>
+        {% for word in ForbiddenWords %}
+        <tr>
+            <th>{{ word.name }}</th>
+            <th > <a href="{% url 'updateforbidden_word' cat.id %}" type="button" class="btn btn_style">Update</a></th>
+            <th > <a href="{% url 'del_forbidden_word' cat.id %}" type="button" class="btn btn_style">Delete</a></th>
             
         </tr>
         {% endfor %}
