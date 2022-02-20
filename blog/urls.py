@@ -13,7 +13,8 @@ urlpatterns = [
   path('useradmin/',views.useradmin , name = 'useradmin'),
   path('logout/',views.userlogout , name = 'logout'),
   path('search/',views.search , name = 'search'),
-  # path('pagination/',views.pagination , name = 'pagination'),
+  path('pagination/',views.pagination , name = 'pagination'),
+
   
   # categories
   path('det_category/<int:id>',views.det_category, name='det_category'),

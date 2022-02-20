@@ -11,7 +11,13 @@ from django.http import HttpResponseRedirect
 import requests
 
 # import pagination
-# from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+# from rest_framework.pagination import (
+#     LimitOffsetPagination,
+#     PageNumberPagination,
+# )
+
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # from django.core.paginator import Paginator
 # Create your views here.
@@ -36,8 +42,8 @@ def profile(request):
 def useradmin(request):
     return render(request, 'blogApp/admin.html')
 
-# def pagination(request):
-#     return render(request, 'blogApp/footer.html')
+def pagination(request):
+    return render(request, 'blogApp/pagination.html')
 
 #register
 
@@ -92,18 +98,58 @@ response = requests.get('https://newsapi.org/v2/everything?'
        'apiKey=b6ddcbd6ea8a4a418617efe10b23cb0c')
 api_post = response.json()
 ln = api_post["articles"]
-
 def homepage(request):
     user = request.user
     cats = Category.objects.all()
-    posts = Post.objects.all()
+   
+    
+    # pagination 5 recent posts .bonus
+    
+    # paginator = Paginator(posts,5)
+    # page = request.GET.get('page')
+    # try:
+    #     posts = paginator.page(page)
+    # except PageNotAnInteger:
+    #     posts = paginator.page(1)
+    # except EmptyPage: posts = Post.objects.all()
+    #     posts = paginator.page(paginator.num_pages)    
+    
     # subs = user.subscriptions_set.all()
     if request.user.is_authenticated:
          subs = user.subscriptions_set.all()
          return redirect("user_subscriptions")
 # context = {"cats": cats, "posts": posts ,"subs": subs ,"ln":ln }
-    context = {"cats": cats, "posts": posts ,"ln":ln }
+    context = {"cats": cats, "posts": posts ,"ln":ln  }
+    
     return render(request, "blogApp/homepage.html", context)
+
+
+    
+ # pagination 5 recent posts .bonus   
+def pagination(request):
+     posts = Post.objects.all()
+     paginator = Paginator(posts,5)
+     page = request.GET.get('page')
+     try:
+        myposts = paginator.page(page)
+     except PageNotAnInteger:
+        myposts = paginator.page(1)
+     except EmptyPage:
+        myposts = paginator.page(paginator.num_pages) 
+         
+     context = {"posts": myposts}
+     return render(request, "blogApp/pagination.html", context)    
+
+
+
+
+
+
+
+
+
+
+
 
 
 # search method
