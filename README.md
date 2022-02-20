@@ -109,8 +109,8 @@ forbidden words.
 * from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Developed By:
-https://github.com/YasminaMohamed99
-https://github.com/TarekEldebsy94
-https://github.com/lightmaher
-https://github.com/123usef
-https://github.com/salma25128
+* https://github.com/YasminaMohamed99
+* https://github.com/TarekEldebsy94
+* https://github.com/lightmaher
+* https://github.com/123usef
+* https://github.com/salma25128
