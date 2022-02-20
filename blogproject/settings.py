@@ -73,6 +73,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "blogproject.wsgi.application"
 
+# EMAIL_HOST = 'localhost'
+# EMAIL_PORT = 1025
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
@@ -131,3 +133,19 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "blog/static")]
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# EMAIL_HOST=smtp.gmail.com
+# EMAIL_HOST_USER=teamiti12@gmail.com
+# EMAIL_HOST_PASSWORD=lightmaher3@gmail.com
+# RECIPIENT_ADDRESS=lighttmaher3@gmail.com
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+
+DEFAULT_FROM_EMAIL = 'teamiti12@gmail.com'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'teamiti12@gmail.com'
+EMAIL_HOST_PASSWORD = 'lightmaher3@gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True

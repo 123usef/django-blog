@@ -1,15 +1,16 @@
-from curses import meta
+# from curses import meta
 from multiprocessing import context
 from django.shortcuts import redirect, render
 from django.contrib.auth.forms import UserCreationForm
 from .forms import CreateForm ,PostForm,CategoryForm,CreatePost
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import ListView
-from .models import Comment, Post, Reaction, Subscriptions, User, Category
+from .models import Comment, Post, Reaction, Subscriptions, User, Category, ForbiddenWords
 from django.contrib import messages 
 from django.http import HttpResponseRedirect
 import requests
-# Create your views here.
+from django.core.mail import send_mail
+from django.conf import settings
 
 
 def base(request):
@@ -30,6 +31,7 @@ def profile(request):
 
 def useradmin(request):
     return render(request, 'blogApp/admin.html')
+
 
 #register
 
@@ -89,11 +91,10 @@ def homepage(request):
     user = request.user
     cats = Category.objects.all()
     posts = Post.objects.all()
-    subs = user.subscriptions_set.all()
     if request.user.is_authenticated:
-        return redirect("user_subscriptions")
-
-    context = {"cats": cats, "posts": posts ,"subs": subs ,"ln":ln }
+         subs = user.subscriptions_set.all()
+         return redirect("user_subscriptions")
+    context = {"cats": cats, "posts": posts ,"ln":ln }
     return render(request, "blogApp/homepage.html", context)
 
 
@@ -135,14 +136,20 @@ def user_subscriptions(request):
     context = {"posts": posts, "cats": cats, "subs_id": subs_id,"ln":ln, "subs":subs}
     return render(request, "blogApp/homepage.html", context)
 
-
+#subscribe
 def subscribe(request, id):
+    user_name = request.user.username
     user_id = request.user.id
     category = Category.objects.get(id=id)
+    user_email = request.user.email
+    send_mail("BYTES N subscription mail ", 
+    f'Hello {user_name} you have subscribed successfully in {category} welcome aboard',
+    settings.DEFAULT_FROM_EMAIL, [user_email])
     subscribe = Subscriptions.objects.create(user_id=request.user, cat_id=category)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 
+ 
 def unsubscribe(request, id):
     user_id = request.user.id
     category = Category.objects.get(id=id)
@@ -170,10 +177,10 @@ def det_post(request, id):
     }
     return render(request, "blogApp/postdetails.html", context)
 
+#create post 
 
 def create_post(request):
-    # user = request.user
-    # form = CreatePost()
+
     if request.method == "POST":
         form = CreatePost(request.POST,request.FILES)
         if form.is_valid():
@@ -191,6 +198,7 @@ def create_post(request):
 
 # Reactions
 
+#add reaction
 def add_reaction(request, id, react):
     user = request.user
     post = Post.objects.get(id=id)
@@ -214,15 +222,25 @@ def add_reaction(request, id, react):
 def add_comment(request,id):
     user = request.user
     post = Post.objects.get(id=id)
+    f_words = ForbiddenWords.objects.all()
 
     if request.method == "POST":
-       comment_content = request.POST.get('comment_content')
-       Comment.objects.create(post_id=post, user_id=user, cmnt_content=comment_content)
-    
+        comment_content = request.POST.get('comment_content')
+        comment_words = comment_content.split()
+        y = 0
+        z = []
+        for word in comment_words:
+            for f_word in f_words:
+                if word == f_word.name:
+                    y = comment_words.index(word)
+                    z.append(y)
+        for i in z:
+            le = len(comment_words[i])
+            comment_words[i]='*'*le
+        x=' '.join(comment_words)
+        Comment.objects.create(post_id=post, user_id=user, cmnt_content=x)
+
     return redirect('post',id)
-
-
-    
 
 
 
@@ -239,11 +257,14 @@ def list_post(request):
         all_posts = Post.objects.all() 
         context = { "posts" : all_posts }
         return render(request, "blogApp/admin.html", context)
+          
+#users    
 def list_users(request):
         all_users = User.objects.all()   
         context = { "users" : all_users }
         return render(request, "blogApp/admin.html", context)
-
+    
+#category 
 def list_categories(request):
         all_categories = Category.objects.all()   
         context = { "categories" : all_categories }
@@ -256,6 +277,7 @@ def locked(request, id):
     userlock.save()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
+#unlock
 def unlocked(request, id):
     userlock = User.objects.get(id = id)
     userlock.user_status = 'unlocked'
@@ -263,6 +285,7 @@ def unlocked(request, id):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 #post crud   
+
 
 def updatepost(request, id):
     post = Post.objects.get(id = id)
@@ -276,6 +299,7 @@ def updatepost(request, id):
     context = {'form' : form} 
     return render(request, 'blogApp/updatepost.html' , context)
 
+#update category
 def updatecategory(request, id):
     category = Category.objects.get(id = id)
     if request.method == 'POST':
@@ -287,19 +311,19 @@ def updatecategory(request, id):
     form = CategoryForm(instance = category)
     context = {'form' : form} 
     return render(request, 'blogApp/updatecategory.html' , context)
-    
+
+ #delete post   
 def deletepost( request, id ):
     post = Post.objects.get(id = id)
     post.delete()
     return redirect('list_post')
     
-#category crud  
+#category crud
+
+#delete category  
 def deletecategory( request, id ):
     category = Category.objects.get(id = id)
     category.delete()
     return redirect('list_categories')
-      
-    
-
-    
+             
 
