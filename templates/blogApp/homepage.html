@@ -24,42 +24,66 @@
      {% block main_block %}
      <!-- <div class="row"> -->
   <div class="container" style="margin-top: 3%;">
+
+    {% comment %} show posts  {% endcomment %}
+    {% if user.is_authenticated and subs %}
+    <div class="row">
+        {% for sub in subs %}
+        <h2 style="margin-left: 8%;margin-top: 3%;"><i><u>{{sub}}</u></i></h2>
+        {% for x in posts %}
+           {% if sub.cat_id == x.cat_id %}   
+              <div class="card text-white col-4 offset-1" style="width:25%;background-color: #242424;  margin-top: 2%; border: 1px solid #9b59b6;">
+                <a href="{% url 'post' x.id  %}"><img src="{{ x.post_picture.url }}" class="card-img-top" style="height:30vh; width:100%; object-fit: cover; " alt="post-image"></a>
+                <div class="card-body">
+                  <p><h3>{{ x.post_title }}</h3></p>
+                  <p> Created By : <strong>{{x.user_id.username}} </strong></p>
+                  <p>Category: {{x.cat_id}}</p>
+                  <p><cite >Date :{{x.post_cr_date}}</cite></p>
+                </div>
+                <a href="{% url 'post' x.id  %}" class='btn btn_style' style="margin-bottom: 1%;"> Details </a>
+              </div>
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+    </div>
+    {% else %}
+
     <div class="row">
       {% for x in posts %}
-      <div class="card text-white col-4 offset-1" style="width:25%;background-color: #242424;  margin-top: 2%; border: 1px solid #9b59b6;">
-        <a href="{% url 'post' x.id  %}"><img src="" class="card-img-top" style="height:30vh; width:100%; object-fit: cover; " alt="post-image"></a>
-        <div class="card-body">
-          <p><h3>{{ x.post_title }}</h3></p>
-          <p> Created By : <strong>{{x.user_id.username}} </strong></p>
          
-             <p><cite >Date :{{x.post_cr_date}}</cite></p>
-         
-          
-        </div>
-       
-        <a href="{% url 'post' x.id  %}" class='btn btn_style' style="margin-bottom: 1%;"> Details </a>
-      </div>
-      {% endfor %}
-    </div>
-    <hr>
+            <div class="card text-white col-4 offset-1" style="width:25%;background-color: #242424;  margin-top: 2%; border: 1px solid #9b59b6;">
+              <a href="{% url 'post' x.id  %}"><img src="{{ x.post_picture.url }}" class="card-img-top" style="height:30vh; width:100%; object-fit: cover; " alt="post-image"></a>
+              <div class="card-body">
+                <p><h3>{{ x.post_title }}</h3></p>
+                <p> Created By : <strong>{{x.user_id.username}} </strong></p>
+                <p>Category: {{x.cat_id}}</p>
+                <p><cite >Date :{{x.post_cr_date}}</cite></p>
+              </div>
+              
+              <a href="{% url 'post' x.id  %}" class='btn btn_style' style="margin-bottom: 1%;"> Details </a>
+            </div>
 
+        {% endfor %}  
+  </div>
+  {% endif %}
+</div>
+    <hr>
+    
+    <div class="container" style="margin-top: 3%;">
+      <h2> <strong>Trending <span class="badge bg-secondary">News</span></strong></h2>
     <div class="row">
       {% for key , v in ln.items %} 
     <div class="card text-white  col-4 offset-1 " style="width: 25%;background-color: #242424;margin-top: 2%;border: 1px solid #9b59b6;">
-      
       <a href="{% url 'post' %}"><img src="{{ v.urlToImage }}" class="card-img-top" style="height:30vh ;wdith:100 ; object-fit: cover;" alt="..."></a>
       <div class="card-body">
         <p><h3>{{ v.title }}</h3></p>
         <p> Created By : <strong>{{ v.author }} </strong></p>
         <p><cite >Date :{{ v.publishedAt }}</cite></p>
-        <p class="card-text">{{ v.description }}</p>
-        <a href="{% url 'Apipost' key   %}" class='btn btn-primary'> Details </a>
+        <a href="{% url 'Apipost' key   %}" class='btn btn_style'style="margin-bottom: 1%;"> Details </a>
       </div>
-    </div>
-    
+    </div>  
       {% endfor %} 
   </div>
-  <!-- </div> -->
 </div>
   {% endblock %}
 </body>

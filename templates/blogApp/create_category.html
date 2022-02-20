@@ -17,8 +17,8 @@
   {% block main_block %}
 
   <div class="container" style="margin-top: 5%;">
-    <h2>Update Category</h2>
-    <form method="POST" enctype="multipart/form-data" action="{% url 'updatecategory' id %}">{% csrf_token %}
+    <h2>Add Category<span class="badge bg-secondary">New</span></h2>
+    <form method="POST" enctype="multipart/form-data" action="{% url 'addcategory' %}">{% csrf_token %}
       <!-- <input type="hidden" name="user_id" value="{{form.user_id}}"> -->
       <div class="mb-3">
         <label for="recipient-name" class="col-form-label">Category Name:</label>
@@ -27,7 +27,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button type="submit" class="btn btn_style">Update</button>
+        <button type="submit" class="btn btn_style">Add</button>
       </div>
     </form>
     {% if messages %} <ul class="messages"> {% for message in messages %} <li class="{{ message.tags }}">{{ message }}

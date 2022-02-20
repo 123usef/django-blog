@@ -21,7 +21,7 @@
             </li>
             {% if user.is_authenticated %}
             <li class="nav-item col-2">
-            <a  class="nav-link main_color link-light" aria-current="page" href="{% url 'create_post' %}"><i class="fa-solid fa-plus" style="margin-right: 4%;"></i>Create Post</a>
+            <a  class="nav-link main_color link-light" aria-current="page" href="{% url 'create_post' %}"><i class="fa-solid fa-circle-plus" style="margin-right: 4%;"></i>Create Post</a>
           </li>
            
             {% endif %}
@@ -29,7 +29,9 @@
               <input class="form-control  bg-gradient p-2 text-dark bg-opacity-75 me-2 " name="search_value" type="search" placeholder="Search" aria-label="Search">
               <button type=""submit class="btn btn_style">search</button>
             </form>
-            {% if user.is_authenticated and user.role == admin %}
+
+            
+            {% if user.is_authenticated and user.user_role == "admin" %}
             <li class="nav-item col-2">
               <a class="nav-link main_color link-light" href="{% url 'useradmin' %}"><i class="fa-solid fa-user-large" style="margin-right: 4%;"></i>Manage blog</a>
             </li>
@@ -48,12 +50,16 @@
               <a class="nav-link main_color link-light" href="{% url 'login' %}"><i class="fa-solid fa-right-to-bracket" style="margin-right: 4%;"></i>Login</a>
             </li>
             {% endif %}
+
+
             <div class="offcanvas offcanvas-start text-white" style="background-color:#141414; width:22vw;" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
               <div class="offcanvas-header">
                 <h5 class="offcanvas-title align-items-center h2"  id="offcanvasExampleLabel" style="margin-top:2%">Categories</h5>
                 <button type="button" class="btn-close text-reset" style="background-color: #ffffff;" data-bs-dismiss="offcanvas" aria-label="Close"></button>
               </div>
               <hr> 
+
+
               <div class="row" style="margin-top: 2%;">
                 {% for x in cats %}
                   <a href="{% url 'det_category' x.id %}" class="nav-link align-middle px-0 link-light font_text h3 col-5 offset-1">{{ x.cat_name }}</a>

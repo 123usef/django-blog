@@ -13,10 +13,43 @@
     {% endblock %}
       
     {% block main_block %}
-    <form method="POST">{% csrf_token %}
-        {{ form }}
-        <input type="submit" value="update"/>
-      </form>
+  
+    <div class="container" style="margin-top: 5%;">
+    <h2>Update Post <span class="badge bg-secondary">New</span></h2>
+    <form method="POST" enctype="multipart/form-data" action="{% url 'updatepost' id %}">{% csrf_token %}
+        <!-- <input type="hidden" name="user_id" value="{{form.user_id}}"> -->
+        <div class="mb-3">
+        <label for="recipient-name" class="col-form-label">Title:</label>
+        <!-- <input type="text" class="form-control" id="recipient-name" name="post_title"> -->
+        {{form.post_title}}
+        </div>
+        
+        <div class="mb-3">
+        <label for="recipient-name" class="col-form-label">Category:</label>
+        
+        <!-- <input type="text" class="form-control" id="recipient-name" name="post_category"> -->
+        {{form.cat_id}}
+        </div>
+        <div class="mb-3">
+        <label for="message-text" class="col-form-label">Content:</label>
+        
+        <!-- <textarea class="form-control" id="message-text" name="post_content"></textarea> -->
+        {{form.post_content}}
+
+        </div>
+        <div class="mb-3">
+        <label for="recipient-name" class="col-form-label">Upload image:</label>
+        <!-- <input type="file" class="form-control" id="recipient-name" accept="image/*" name="post_image"/> -->
+        {{form.post_picture}}
+
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn_style">Update</button>
+        </div>
+    </form>
+    {% if messages %} <ul class="messages"> {% for message in messages %} <li class="{{ message.tags }}">{{ message }}</li> {% endfor %} </ul> {% endif %}
+    </div>
     {% endblock %}
 
 </body>

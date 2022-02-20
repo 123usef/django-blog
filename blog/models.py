@@ -1,4 +1,5 @@
 from distutils.command.upload import upload
+from email.policy import default
 from pyexpat import model
 from django.db import models
 from django.contrib.auth.models import AbstractUser
@@ -11,15 +12,13 @@ class User(AbstractUser):
 
     statuses = (("locked", "locked"), ("unlocked", "unlocked"))
     roles = (("user", "user"), ("admin", "admin"))
-    user_status = models.CharField(max_length=20, choices=statuses ,default="user")
-    user_role = models.CharField(max_length=20, choices=roles)
+    user_status = models.CharField(max_length=20, choices=statuses, default="unlocked")
+    user_role = models.CharField(max_length=20, choices=roles, default="user")
 
     def __str__(self):
         return self.username
 
-    # creating category table
-
-
+# creating category table
 class Category(models.Model):
     cat_name = models.CharField(max_length=30)
 
@@ -28,8 +27,6 @@ class Category(models.Model):
 
 
 # creating subscription table
-
-
 class Subscriptions(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     cat_id = models.ForeignKey(Category, on_delete=models.CASCADE)
@@ -39,12 +36,10 @@ class Subscriptions(models.Model):
 
 
 # create post table
-
-
 class Post(models.Model):
-    post_title = models.CharField(max_length=30)
-    post_picture = models.ImageField(null=True, blank=True , upload_to="img/")
-    post_content = models.CharField(max_length=500)
+    post_title = models.CharField(max_length=300)
+    post_picture = models.ImageField(null=True, blank=True , upload_to="img/" ,default='img/Default_Image.png')
+    post_content = models.CharField(max_length=5000)
     post_cr_date = models.DateTimeField(auto_now_add=True)
     cat_id = models.ForeignKey(Category, on_delete=models.CASCADE)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -64,14 +59,15 @@ class Tags(models.Model):
 
 
 # create comment.s
-
-
 class Comment(models.Model):
     cmnt_cr_date = models.DateTimeField(auto_now_add=True)
     cmnt_content = models.CharField(max_length=200, null=True)
     post_id = models.ForeignKey(Post, on_delete=models.CASCADE)  # fk-post
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)  # fk-user
-
+#    comment reply
+    # parent = models.ForeignKey('self', null=True, related_name='replies')
+    # def __str__(self):
+    #     return self.text
 
 # create reactions.s
 class Reaction(models.Model):
@@ -80,3 +76,9 @@ class Reaction(models.Model):
     reaction = models.CharField(max_length=8, choices=roles)
     post_id = models.ForeignKey(Post, on_delete=models.CASCADE)  # fk-post
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)  # fk-user
+        
+class ForbiddenWords(models.Model):
+    name = models.CharField(max_length=200)
+    def __str__(self):
+        return self.name
+    

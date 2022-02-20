@@ -14,48 +14,12 @@
             <p> <p class="card-text">{{post.content}}</p> </p>
           </div>
           <div style="margin-left: 40%;">
-            {% if user.is_authenticated %}
-              <p>
-                <a href="{% url 'add_reaction' id=post.id  react='like'  %}" class="btn btn-primary">
-                  Like <span class="badge bg-secondary">{{likes}}</span>
-                </a>
-                <a href="{% url 'add_reaction' id=post.id react='dislike' %}" class="btn btn-primary">
-                Dislike <span class="badge bg-secondary">{{dislikes}}</span></a>
-              </p>
-              {% endif %}
+            
             <p><a href="{% url 'homepage'%}" class='btn btn-info'> back to all posts </a></p>
           </div>
       </div>
     </div>
   </div>
-  {% if user.is_authenticated %}
-    <div class="container" style="position:relative;width: 60%;">
-      <div class="card mb-3 border border-rounded" style="background-color: #383838;">
-        <div class="card-body">
-          <div class="container" style="width: 90%;">
-            <h3>Leave Your Comment!</h3>
-            <form method="POST" action="{% url 'add_comment' post.id %}">{% csrf_token %}
-              <!-- <input type="textarea" name="comment_content" /> -->
-              <textarea name="comment_content" id="" cols="65" rows="5"></textarea><br><br>
-              <input type="submit" value="comment" class="btn btn-primary">
-            </form  >
-          </div>
-        </div>
-      </div>
-    </div>
-    {% for comment in comments %}
-    <div class="container" style="position:relative;width: 60%;">
-      <div class="card mb-3 border border-rounded" style="background-color: #383838;">
-        <div class="card-body">
-          <div class="container" style="width: 90%;">
-            <span> <i>UserName:</i> <strong>{{comment.user_id.username}}</strong></span><br>
-            <span>{{comment.cmnt_cr_date}}</span><br>
-            <h4>"{{comment.cmnt_content}}"</h4>
-          </div>
-        </div>
-      </div>
-    </div>
-    {% endfor %}
-  {% endif %}
+  
 
   {% endblock %}

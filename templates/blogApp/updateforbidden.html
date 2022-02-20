@@ -7,7 +7,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>updatecategory</title>
+  <title>updateforbidden</title>
 </head>
 
 <body>
@@ -17,13 +17,13 @@
   {% block main_block %}
 
   <div class="container" style="margin-top: 5%;">
-    <h2>Update Category</h2>
-    <form method="POST" enctype="multipart/form-data" action="{% url 'updatecategory' id %}">{% csrf_token %}
+    <h2>Update Forbidden Word</h2>
+    <form method="POST" enctype="multipart/form-data" action="{% url 'updateforbidden_word' id %}">{% csrf_token %}
       <!-- <input type="hidden" name="user_id" value="{{form.user_id}}"> -->
       <div class="mb-3">
-        <label for="recipient-name" class="col-form-label">Category Name:</label>
+        <label for="recipient-name" class="col-form-label">Forbidden Word:</label>
         <!-- <input type="text" class="form-control" id="recipient-name" name="post_title"> -->
-        {{form.cat_name}}
+        {{form.name}}
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
