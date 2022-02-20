@@ -12,7 +12,7 @@ Creatinng a news blog using django framework
     the admin to the administration page to make the admin CRUD Operations.
 
 
-                                            # Register
+                                           # Register
                                             
 ![register](https://user-images.githubusercontent.com/71194059/154838364-c8814cb1-d740-4d99-bfd9-f6b2df6e7462.png)
 * Username
@@ -20,13 +20,14 @@ Creatinng a news blog using django framework
 * Password
 * Password Confirmation
 
-                                                # login
+                                               # login
                                                 
 ![login](https://user-images.githubusercontent.com/71194059/154838330-706e5d56-df5c-4dc0-96fd-1ed0d6336f2e.png)
 * The form contains 2 fields. Username & PW.
 * Password will be shown in asterisks. when the user clicks on login, 
 * if he is blocked then redirect him back to the login page with a message (sorry you are blocked contact the admin)
 * if he isn’t blocked then he will be authenticated.
+
 
                                          # manageblog/admin panel 
                                          
@@ -43,16 +44,15 @@ Creatinng a news blog using django framework
 * The Admin page will contain links
 ( users, posts, categories, forbidden words ).
 When Admin clicks on the Posts Link, it would list all posts, with links to :
- *edit, 
- *delete 
- *create.
-The same will be applied to categories 
-forbidden words.
+ * Edit, 
+ * Delete 
+ * Create.
+The same will be applied to categories forbidden words.
 
 
-* When Admin clicks on Users Link
-* it would list all the users 
-  in case The user is also an admin, his row will be colored red. Else it will be a normal row. Or display is Admin equals to True.
+
+* When Admin clicks on Users Link it would list all the users in case The user is also an admin, his row will be colored red. 
+* Else it will be a normal row. Or display is Admin equals to True.
 * For normal users, there should be a button that enables the admin to either lock or unlock this user from logging into the system. 
 * And for the Admin users, this button is not available So, an admin cannot lock another admin.
 
@@ -75,6 +75,7 @@ forbidden words.
 
 ![create post](https://user-images.githubusercontent.com/71194059/154838807-a24d5616-d594-4a33-a772-c243ca7f8580.png)
 
+
                                                    # post
                                                    
 ![posts](https://user-images.githubusercontent.com/71194059/154838830-17c010ff-6443-4750-b48a-d6b4fad6ed51.png)
@@ -93,8 +94,9 @@ forbidden words.
 * Each comment shows the time of the comment and the username who wrote the comment.
 * There will be a reply on comment (Bonus)
 * Add comment Section. User must be signed in to can submit a comment (enter the text and a submit button to submit the comment)
-* If the comment contains inappropriate words, it will show like
-******
+* If the comment contains inappropriate words, it will show like ******
+
+
 # To start django project:
 
 * Set up a virtual environment
