@@ -1,4 +1,4 @@
-# django-blog
+                                                   # django-blog
 Creatinng a news blog using django framework
 
 
@@ -6,21 +6,22 @@ Creatinng a news blog using django framework
 
                                      # Landing Page Content:
 ## Header:
-***Will contain Two links Login/Register. 
-**If the user is already logged in,then the link will be Logout.
-**If the logged-in user is an admin,then there will be another link called Manage Blog that will redirect
+* Will contain Two links Login/Register. 
+* If the user is already logged in,then the link will be Logout.
+* If the logged-in user is an admin,then there will be another link called Manage Blog that will redirect
     the admin to the administration page to make the admin CRUD Operations.
 
 
                                             # Register
                                             
 ![register](https://user-images.githubusercontent.com/71194059/154838364-c8814cb1-d740-4d99-bfd9-f6b2df6e7462.png)
-** Username
-** Email
-** Password
-** Password Confirmation
+* Username
+* Email
+* Password
+* Password Confirmation
 
                                                 # login
+                                                
 ![login](https://user-images.githubusercontent.com/71194059/154838330-706e5d56-df5c-4dc0-96fd-1ed0d6336f2e.png)
 * The form contains 2 fields. Username & PW.
 * Password will be shown in asterisks. when the user clicks on login, 
@@ -49,9 +50,9 @@ The same will be applied to categories
 forbidden words.
 
 
-*When Admin clicks on Users Link,
-* it would list all the users, 
-in case The user is also an admin, his row will be colored red. Else it will be a normal row. Or display is Admin equals to True.
+* When Admin clicks on Users Link
+* it would list all the users 
+  in case The user is also an admin, his row will be colored red. Else it will be a normal row. Or display is Admin equals to True.
 * For normal users, there should be a button that enables the admin to either lock or unlock this user from logging into the system. 
 * And for the Admin users, this button is not available So, an admin cannot lock another admin.
 
