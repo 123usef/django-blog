@@ -104,8 +104,9 @@ forbidden words.
 * Start a Django app
 
 # import 
-*from django.core.mail import send_mail
-*from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+* from django.core.mail import send_mail
+* from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Developed By:
 https://github.com/YasminaMohamed99
