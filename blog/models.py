@@ -11,7 +11,7 @@ class User(AbstractUser):
 
     statuses = (("locked", "locked"), ("unlocked", "unlocked"))
     roles = (("user", "user"), ("admin", "admin"))
-    user_status = models.CharField(max_length=20, choices=statuses)
+    user_status = models.CharField(max_length=20, choices=statuses ,default="user")
     user_role = models.CharField(max_length=20, choices=roles)
 
     def __str__(self):

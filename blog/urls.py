@@ -20,6 +20,7 @@ urlpatterns = [
   path('unsubscribe/<int:id>',views.unsubscribe, name='unsubscribe'),
   # Posts
    path('post/<int:id>',views.det_post, name='post'),
+   path('Apipost/<int:id>',views.Apidet_post, name='Apipost'),
    path('react/<int:id>/<str:react>' , views.add_reaction , name='add_reaction'),
    path('createpost/',views.create_post, name='create_post'),
   #  Comment

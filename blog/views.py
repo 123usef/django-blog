@@ -9,6 +9,7 @@ from .models import Comment, Post, Reaction, Subscriptions, User, Category
 from django.contrib import messages 
 from django.http import HttpResponseRedirect
 import requests
+from django.core.mail import send_mail
 # Create your views here.
 
 
@@ -84,6 +85,11 @@ response = requests.get('https://newsapi.org/v2/everything?'
        'apiKey=b6ddcbd6ea8a4a418617efe10b23cb0c')
 api_post = response.json()
 ln = api_post["articles"]
+idx_ln = {}
+x = 1
+for i in ln:
+    idx_ln[x] = i
+    x = x + 1
 
 def homepage(request):
     cats = Category.objects.all()
@@ -92,7 +98,7 @@ def homepage(request):
     if request.user.is_authenticated:
         return redirect("user_subscriptions")
 
-    context = {"cats": cats, "posts": posts ,  "ln":ln }
+    context = {"cats": cats, "posts": posts ,  "ln":idx_ln }
     return render(request, "blogApp/homepage.html", context)
 
 
@@ -138,6 +144,12 @@ def user_subscriptions(request):
 def subscribe(request, id):
     user_id = request.user.id
     category = Category.objects.get(id=id)
+    user_email = request.user.user_email
+    send_mail( "BYTES N subscription mail  ",
+    f'you have been subscribed to {category} category ' ,
+     "yousifm836@gmail.com" , 
+     user_email,
+    fail_silently=False, )
     subscribe = Subscriptions.objects.create(user_id=request.user, cat_id=category)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
@@ -169,6 +181,15 @@ def det_post(request, id):
     }
     return render(request, "blogApp/postdetails.html", context)
 
+def Apidet_post(request,id):
+    pst = idx_ln[id]
+    # reacts = post.reaction_set.all()
+    # likes = len(reacts.filter(reaction="like"))
+    # dislikes = len(reacts.filter(reaction="dislike"))
+    # comment = Comment.objects.filter(post_id=id).order_by("-cmnt_cr_date")
+    # reaction = Reaction.objects.filter(post_id=id)
+    context={"post":pst}
+    return render(request, "blogApp/Apipost.html", context)
 
 def create_post(request):
     # user = request.user
@@ -299,4 +320,4 @@ def deletecategory( request, id ):
     
 
     
-
+988888888888888888888888888888888
