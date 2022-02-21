@@ -1,0 +1,47 @@
+                                                                              # django-blog
+# MVT 
+
+                                                                                     # MODELS 
+## (YOSIF / Nour / Tarek )
+* user 
+* category 
+* tags 
+
+## (Yasmina / Salma)
+* post 
+* comment 
+* reaction
+
+                                                                                      # Views
+                                                                                      
+![image](https://user-images.githubusercontent.com/71194059/154875894-a99ac3fb-185e-4643-ac5e-39584c2afef2.png)
+                                                                                      
+## (YOSIF / Nour / Tarek )
+* Show post
+* Category
+* Like / Dislike 
+* Subscription / Unsubscribe
+* Login
+* Signup
+* forbiddenword
+
+## (Yasmina / Salma)
+* Admin crud post 
+* Admin crud category 
+* Admin crud forbidden word
+* Admin crud user
+* pagenation
+
+# Templates
+## (YOSIF / Nour / Tarek )
+* posts
+* post detailes
+* profile
+## (Yasmina / Salma)
+* Homepage
+* admin
+* sidebar 
+* Navbar
+* login
+* Signup
+* pagination
