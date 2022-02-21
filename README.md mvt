@@ -1,7 +1,7 @@
                                                                               # django-blog
 # MVT 
 
-                                                                                     # MODELS 
+# MODELS 
 ## (YOSIF / Nour / Tarek )
 * user 
 * category 
@@ -11,11 +11,7 @@
 * post 
 * comment 
 * reaction
-
-                                                                                      # Views
-                                                                                      
-![image](https://user-images.githubusercontent.com/71194059/154875894-a99ac3fb-185e-4643-ac5e-39584c2afef2.png)
-                                                                                      
+ # Views                                                                                                                                                                       
 ## (YOSIF / Nour / Tarek )
 * Show post
 * Category
